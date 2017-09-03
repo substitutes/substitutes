@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Vertretungsplan</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+    <nav class="red lighten-2"><a href="/" class="brand-logo center">Vertretungsplan</a></nav>
+    <div class="container">
+        <div class="card-panel grey lighten-3">
+            <h3>Vertretungsplan für die {{ .klasse }}</h3>
+            <table class="responsive-table">
+                <thead>
+                    <th>Stunde</th>
+                    <th>Lehrer</th>
+                    <th>Fach</th>
+                    <th>Raum</th>
+                </thead>
+                <tbody class="flow-text"></tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script>
+        $(() => {
+            $.getJSON("/api/{{ .klasse }}", data => $.each(data, (a, b) => {
+                $("tbody").append("<tr><td>" + b.Std + "</td><td>" + b.Teacher +
+                    "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td></tr>")
+            })).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
+        });
+    </script>
+</body>
+
+</html>

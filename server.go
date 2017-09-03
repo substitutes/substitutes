@@ -9,11 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type class struct {
-	Link  string
-	Title string
-}
-
 type vertretung struct {
 	Class   string
 	Std     string
@@ -25,6 +20,14 @@ type vertretung struct {
 
 func main() {
 	r := gin.Default()
+
+	r.LoadHTMLGlob("ui/*")
+
+	r.Static("a", "a")
+
+	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", nil) })
+
+	r.GET("/k/:k", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"klasse": c.Param("k")}) })
 
 	api := r.Group("api")
 	{
@@ -40,15 +43,14 @@ func main() {
 				c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
 				return
 			}
-			var classes []class
+			var classes []string
 			doc.Find("table").Last().Find("td").Each(func(i int, sel *goquery.Selection) {
-				href, _ := sel.Find("a").First().Attr("href")
 				title := sel.Text()
 				if title != "" {
 					if title == "---" {
-						title = "Entfall"
+						title = "entfall"
 					}
-					classes = append(classes, class{Link: href, Title: title})
+					classes = append(classes, title)
 				}
 			})
 			c.JSON(200, classes)
@@ -63,6 +65,10 @@ func main() {
 				return
 			}
 			resp, err := request("Druck_Kla_" + k + ".htm")
+			if resp.StatusCode == 404 {
+				c.JSON(404, gin.H{"message": "Not found."})
+				return
+			}
 			if resp.StatusCode != 200 {
 				c.JSON(500, gin.H{"message": "Expected 200, got: " + resp.Status})
 				return
@@ -93,13 +99,13 @@ func main() {
 							v.Std = t
 							break
 						case 2:
-							v.Teacher = t
+							v.Teacher = strings.Replace(t, "?", " => ", 1)
 							break
 						case 3:
 							v.Subject = t
 							break
 						case 4:
-							v.Room = t
+							v.Room = strings.Replace(t, "?", " => ", 1)
 							break
 						case 5:
 							v.Type = t
