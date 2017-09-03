@@ -1,6 +1,9 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"regexp"
 	"strings"
@@ -127,10 +130,25 @@ func request(url string) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-	req.SetBasicAuth("schueler", "31ovp#18")
+	req.SetBasicAuth(c().Username, c().Password)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
+}
+
+type Credentials struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
+
+func c() Credentials {
+	b, err := ioutil.ReadFile("credentials.json")
+	if err != nil {
+		log.Fatal("Failed to read config file!")
+	}
+	var c Credentials
+	json.Unmarshal(b, &c)
+	return c
 }
