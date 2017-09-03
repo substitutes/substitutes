@@ -13,6 +13,10 @@
 			"Rev": "349dd0209470eabd9514242c688c403c0926d266"
 		},
 		{
+			"ImportPath": "github.com/djimenez/iconv-go",
+			"Rev": "8960e66bd3dacbc8773962b40eb82fc18c63c127"
+		},
+		{
 			"ImportPath": "github.com/gin-contrib/sse",
 			"Rev": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
 		},
