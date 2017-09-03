@@ -112,7 +112,7 @@ func main() {
 							v.Std = t
 							break
 						case 2:
-							if sel.Find("s").Text() != "" {
+							if sel.Find("s").Text() != "" && !strings.Contains(t, "?") {
 								v.Cancelled = true
 								v.Notes += "Ausfall! "
 							} else {
