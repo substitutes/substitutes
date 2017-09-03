@@ -1,6 +1,6 @@
 {
     "short_name": "Vertretungsplan",
-    "name": "Steinbart-Gymnasium Stundenplan",
+    "name": "Steinbart-Gymnasium Vertretungsplan",
     "icons": [{
             "src": "/a/icons/drawable-xxhdpi/icon.png",
             "type": "image/png",
@@ -13,7 +13,7 @@
         }
     ],
     "start_url": "/",
-    "display": "minimal-ui",
+    "display": "standalone",
     "background_color": "#fff",
     "theme_color": "#e57373"
 }
