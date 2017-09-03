@@ -1,0 +1,79 @@
+{
+	"ImportPath": "github.com/fronbasal/stundenplan",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v1.1.0-7-gce645ea",
+			"Rev": "ce645ea5e67a713599b7415f21f0786451fa9554"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Rev": "349dd0209470eabd9514242c688c403c0926d266"
+		},
+		{
+			"ImportPath": "github.com/gin-contrib/sse",
+			"Rev": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.2-106-gab50cf9",
+			"Rev": "ab50cf97900b63748a62a81c06c9189ef536d121"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.2-106-gab50cf9",
+			"Rev": "ab50cf97900b63748a62a81c06c9189ef536d121"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/json",
+			"Comment": "v1.2-106-gab50cf9",
+			"Rev": "ab50cf97900b63748a62a81c06c9189ef536d121"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
+			"Comment": "v1.2-106-gab50cf9",
+			"Rev": "ab50cf97900b63748a62a81c06c9189ef536d121"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "17ce1425424ab154092bbb43af630bd647f3bb0d"
+		},
+		{
+			"ImportPath": "github.com/json-iterator/go",
+			"Comment": "jsoniter-go-0.9.19-21-g39e9d67",
+			"Rev": "39e9d67807456d78bacc642c9c860874a3bd0f08"
+		},
+		{
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.2",
+			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "8c0409fcbb70099c748d71f714529204975f6c3f"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "66aacef3dd8a676686c7ae3716979581e8b03c47"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "35ef4487ce0a1ea5d4b616ffe71e34febe723695"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.18.2",
+			"Rev": "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
+		},
+		{
+			"ImportPath": "gopkg.in/yaml.v2",
+			"Rev": "eb3733d160e74a9c7e442f435eb3bea458e1d19f"
+		}
+	]
+}
