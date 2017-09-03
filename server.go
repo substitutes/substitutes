@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	iconv "github.com/djimenez/iconv-go"
 	"github.com/gin-gonic/gin"
 )
 
@@ -81,7 +82,14 @@ func main() {
 				return
 			}
 			defer resp.Body.Close()
-			doc, err := goquery.NewDocumentFromReader(resp.Body)
+
+			utfBody, err := iconv.NewReader(resp.Body, "iso-8859-1", "utf-8")
+			if err != nil {
+				c.JSON(500, gin.H{"message": "Failed to decompose UTF8"})
+				return
+			}
+
+			doc, err := goquery.NewDocumentFromReader(utfBody)
 			if err != nil {
 				c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
 				return
@@ -118,7 +126,14 @@ func main() {
 					vertretungen = append(vertretungen, v)
 				}
 			})
-			c.JSON(200, vertretungen)
+
+			var meta struct {
+				Datum  string
+				Klasse string
+			}
+			meta.Datum = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
+			meta.Klasse = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
+			c.JSON(200, gin.H{"vertretungen": vertretungen, "meta": meta})
 		})
 	}
 
