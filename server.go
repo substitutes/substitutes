@@ -14,12 +14,14 @@ import (
 )
 
 type vertretung struct {
-	Class   string
-	Std     string
-	Teacher string
-	Subject string
-	Room    string
-	Type    string
+	Class     string
+	Std       string
+	Teacher   string
+	Subject   string
+	Room      string
+	Type      string
+	Cancelled bool
+	Notes     string
 }
 
 func main() {
@@ -110,6 +112,12 @@ func main() {
 							v.Std = t
 							break
 						case 2:
+							if sel.Find("s").Text() != "" {
+								v.Cancelled = true
+								v.Notes += "Ausfall! "
+							} else {
+								v.Cancelled = false
+							}
 							v.Teacher = strings.Replace(t, "?", " => ", 1)
 							break
 						case 3:
@@ -120,6 +128,9 @@ func main() {
 							break
 						case 5:
 							v.Type = t
+							break
+						case 6:
+							v.Notes += t
 							break
 						}
 					})

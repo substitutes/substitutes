@@ -35,6 +35,7 @@
                     <th>Lehrer</th>
                     <th>Fach</th>
                     <th>Raum</th>
+                    <th>Anmerkungen</th>
                 </thead>
                 <tbody class="flow-text"></tbody>
             </table>
@@ -54,8 +55,14 @@
         $(() => {
             $.getJSON("/api/{{ .klasse }}", data => {
                 $.each(data.vertretungen, (a, b) => {
-                    $("tbody").append("<tr><td>" + b.Std + "</td><td>" + b.Teacher +
-                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td></tr>")
+                    b.Cancelled ? $("tbody").append("<tr class='red-text text-lighten-2'><td>" +
+                        b.Std + "</td><td>" + b.Teacher +
+                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Notes +
+                        "</td></tr>") : $("tbody").append(
+                        "<tr><td>" + b.Std + "</td><td>" +
+                        b.Teacher +
+                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Notes +
+                        "</td></tr>");
                 });
                 $("h4").html(data.meta.Datum);
                 $("#title").html(data.meta.Klasse);
