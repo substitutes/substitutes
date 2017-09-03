@@ -20,8 +20,8 @@ type vertretung struct {
 	Subject   string
 	Room      string
 	Type      string
-	Cancelled bool
 	Notes     string
+	Cancelled bool
 }
 
 func main() {
@@ -112,16 +112,14 @@ func main() {
 							v.Std = t
 							break
 						case 2:
-							if sel.Find("s").Text() != "" && !strings.Contains(t, "?") {
-								v.Cancelled = true
-								v.Notes += "Ausfall! "
-							} else {
-								v.Cancelled = false
-							}
 							v.Teacher = strings.Replace(t, "?", " => ", 1)
 							break
 						case 3:
-							v.Subject = t
+							if strings.Contains(t, "R") {
+								v.Subject = ""
+							} else {
+								v.Subject = t
+							}
 							break
 						case 4:
 							v.Room = strings.Replace(t, "?", " => ", 1)
