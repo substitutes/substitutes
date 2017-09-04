@@ -1,19 +1,25 @@
 {
-    "short_name": "Vertretungsplan",
-    "name": "Steinbart-Gymnasium Vertretungsplan",
-    "icons": [{
-            "src": "/a/icons/drawable-xxhdpi/icon.png",
-            "type": "image/png",
-            "sizes": "144x144"
-        },
-        {
-            "src": "/a/icons/drawable-xxxhdpi/icon.png",
-            "type": "image/png",
-            "sizes": "192x192"
-        }
-    ],
-    "start_url": "/",
-    "display": "standalone",
-    "background_color": "#fff",
-    "theme_color": "#e57373"
+  "short_name": "Vertretungen",
+  "name": "Steinbart-Gymnasium Vertretungsplan",
+  "icons": [
+    {
+      "src": "/a/icons/drawable-xxhdpi/icon.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "/a/icons/drawable-xxxhdpi/icon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/a/icons/hiresfavicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "theme_color": "#e57373"
 }
