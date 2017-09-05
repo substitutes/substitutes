@@ -54,7 +54,7 @@ func main() {
 				title := sel.Text()
 				if title != "" {
 					if title == "---" {
-						title = "entfall"
+						title = "Entfall"
 					}
 					classes = append(classes, title)
 				}
@@ -64,7 +64,7 @@ func main() {
 
 		api.GET("/:klasse", func(c *gin.Context) {
 			k := c.Param("klasse")
-			if k == "entfall" {
+			if k == "Entfall" {
 				k = "___"
 			} else if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(k) {
 				c.JSON(400, gin.H{"message": "Invalid class!"})
