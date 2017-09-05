@@ -15,7 +15,7 @@ $(() => {
   $('select').material_select();
   $.getJSON("/api", data => {
     $.each(data, (a, b) => {
-      $("#morgen").append("<option value='" + b + "'>" + b + "</option>");
+      $("#heute").append("<option value='" + b + "'>" + b + "</option>");
     });
     $.each(klassen(), (a, b) => {
       $("#alle").append("<option value='" + b + "'>" + b + "</option>");
