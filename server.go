@@ -106,20 +106,26 @@ func main() {
 						switch i {
 						// dis ugly bc fuck html
 						case 0:
+							// Get the class
 							v.Class = sel.Find("b").Text()
 							break
 						case 1:
+							// The hour
 							v.Std = t
 							break
 						case 2:
+							// The teacher
 							v.Teacher = strings.Replace(t, "?", " => ", 1)
 							break
 						case 3:
-							if strings.Contains(t, "R") {
+							// I don't get why i did this
+							/*if strings.Contains(t, "R") {
 								v.Subject = ""
 							} else {
+								// Fucking bullshit
 								v.Subject = t
-							}
+							}*/
+							v.Subject = t
 							break
 						case 4:
 							v.Room = strings.Replace(t, "?", " => ", 1)
