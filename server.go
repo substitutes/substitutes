@@ -156,11 +156,12 @@ func main() {
 }
 
 func request(url string) (*http.Response, error) {
-	req, err := http.NewRequest("GET", "http://www.stgym.de/ovp/"+url, nil)
+	creds := loadCredentials()
+	req, err := http.NewRequest("GET", creds.Host+url, nil)
 	if err != nil {
 		return nil, err
 	}
-	req.SetBasicAuth(c().Username, c().Password)
+	req.SetBasicAuth(creds.Username, creds.Password)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -168,12 +169,14 @@ func request(url string) (*http.Response, error) {
 	return resp, nil
 }
 
+// Credentials struct for importing credentials
 type Credentials struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
+	Host     string `json:"host"`
 }
 
-func c() Credentials {
+func loadCredentials() Credentials {
 	b, err := ioutil.ReadFile("credentials.json")
 	if err != nil {
 		log.Fatal("Failed to read config file!")
