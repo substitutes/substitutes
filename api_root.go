@@ -23,6 +23,8 @@ func apiRoot(c *gin.Context) {
 		if title != "" {
 			if title == "---" {
 				title = "Entfall"
+			} else if title == "XXX" {
+				title = "Pausenaufsicht"
 			}
 			classes = append(classes, title)
 		}
