@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	vapi "github.com/fronbasal/vertretungsplan/api"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -18,9 +19,9 @@ func GinEngine() *gin.Engine {
 
 	api := r.Group("api")
 	{
-		api.GET("/", apiRoot)
+		api.GET("/", vapi.Root)
 
-		api.GET("/:klasse", apiParser)
+		api.GET("/:klasse", vapi.Parser)
 	}
 
 	return r
