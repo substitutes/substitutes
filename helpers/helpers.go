@@ -10,12 +10,12 @@ import (
 )
 
 func Request(url string) (*http.Response, error) {
-	creds := LoadCredentials()
-	req, err := http.NewRequest("GET", creds.Host+url, nil)
+	credentials := LoadCredentials()
+	req, err := http.NewRequest("GET", credentials.Host+url, nil)
 	if err != nil {
 		return nil, err
 	}
-	req.SetBasicAuth(creds.Username, creds.Password)
+	req.SetBasicAuth(credentials.Username, credentials.Password)
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err

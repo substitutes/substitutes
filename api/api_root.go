@@ -23,9 +23,9 @@ func Root(c *gin.Context) {
 		title := sel.Text()
 		if title != "" {
 			if title == "---" {
-				title = "Entfall"
+				title = "Cancelled"
 			} else if title == "XXX" {
-				title = "Pausenaufsicht"
+				title = "Break Supervisor"
 			}
 			classes = append(classes, title)
 		}
