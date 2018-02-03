@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strings"
-	"github.com/fronbasal/vertretungsplan/structs"
+	"github.com/fronbasal/substitutes/structs"
 )
 
 func Request(url string) (*http.Response, error) {

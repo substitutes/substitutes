@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
-	"github.com/fronbasal/vertretungsplan/helpers"
+	"github.com/fronbasal/substitutes/helpers"
 )
 
 func Root(c *gin.Context) {
