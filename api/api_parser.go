@@ -12,8 +12,8 @@ import (
 )
 
 func Parser(c *gin.Context) {
-	k := c.Param("klasse")
-	if k == "Entfall" {
+	k := c.Param("class")
+	if k == "Cancelled" {
 		k = "___"
 	} else if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(k) {
 		c.JSON(400, gin.H{"message": "Invalid class!"})
@@ -45,11 +45,11 @@ func Parser(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
 		return
 	}
-	var vertretungen []structs.Vertretung
+	var substitutes []structs.Substitutes
 	doc.Find("table").Last().Remove()
 	doc.Find("table").Last().Find("tr").Each(func(i int, sel *goquery.Selection) {
 		if i != 0 {
-			var v structs.Vertretung
+			var v structs.Substitutes
 			sel.Find("td font").Each(func(i int, sel *goquery.Selection) {
 				t := strings.Replace(sel.Text(), "\n", "", -1)
 				switch i {
@@ -60,7 +60,7 @@ func Parser(c *gin.Context) {
 					break
 				case 1:
 					// The hour
-					v.Std = t
+					v.Hour = t
 					break
 				case 2:
 					// The teacher
@@ -87,15 +87,15 @@ func Parser(c *gin.Context) {
 					break
 				}
 			})
-			vertretungen = append(vertretungen, v)
+			substitutes = append(substitutes, v)
 		}
 	})
 
 	var meta struct {
-		Datum  string
-		Klasse string
+		Date  string
+		Class string
 	}
-	meta.Datum = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
-	meta.Klasse = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
-	c.JSON(200, gin.H{"vertretungen": vertretungen, "meta": meta})
+	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
+	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
+	c.JSON(200, gin.H{"substitutes": substitutes, "meta": meta})
 }

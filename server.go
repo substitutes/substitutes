@@ -15,13 +15,13 @@ func GinEngine() *gin.Engine {
 
 	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", nil) })
 
-	r.GET("/k/:k", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"klasse": c.Param("k")}) })
+	r.GET("/k/:k", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("k")}) })
 
 	api := r.Group("api")
 	{
 		api.GET("/", vapi.Root)
 
-		api.GET("/:klasse", vapi.Parser)
+		api.GET("/:class", vapi.Parser)
 	}
 
 	return r
