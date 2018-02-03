@@ -7,8 +7,8 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/djimenez/iconv-go"
 	"github.com/gin-gonic/gin"
-	"github.com/fronbasal/vertretungsplan/helpers"
-	"github.com/fronbasal/vertretungsplan/structs"
+	"github.com/fronbasal/substitutes/helpers"
+	"github.com/fronbasal/substitutes/structs"
 )
 
 func Parser(c *gin.Context) {
