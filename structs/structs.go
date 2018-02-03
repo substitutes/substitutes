@@ -1,8 +1,9 @@
 package structs
 
-type Vertretung struct {
+// Substitutes struct for holding data
+type Substitutes struct {
 	Class     string
-	Std       string
+	Hour      string
 	Teacher   string
 	Subject   string
 	Room      string

