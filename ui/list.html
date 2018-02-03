@@ -18,7 +18,7 @@
 <nav class="teal lighten-2"><a href="/" class="brand-logo center">Vertretungsplan</a></nav>
 <div class="container" id="app">
     <div class="card-panel grey lighten-3">
-        <h4>Vertretungen</h4>
+        <h4>Substitutes</h4>
         <p class="flow-text" id="title"></p>
         <table class="responsive-table">
             <thead>
@@ -36,8 +36,7 @@
 <footer class="page-footer teal lighten-2">
     <div class="footer-copyright">
         <div class="container">
-            &copy; 2017 Daniel Malik
-            <a class="grey-text text-lighten-3 right" href="https://goo.gl/forms/SXzdoOPqodWYQi4r2">Fehler melden</a>
+            &copy; 2017 Daniel Malik (@fronbasal)
         </div>
     </div>
 </footer>
@@ -49,8 +48,8 @@
 <script>
     $(() => {
         $.getJSON("/api/{{ .class }}", data => {
-            $.each(data.vertretungen, (a, b) => {
-                (b.Type == "Entfall") ? $("tbody").append(
+            $.each(data.substitutes, (a, b) => {
+                (b.Type === "Cancelled") ? $("tbody").append(
                         "<tr class='teal-text text-lighten-2'><td>" +
                         b.Hour + "</td><td>" + b.Teacher +
                         "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
@@ -60,7 +59,7 @@
                         "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
                         "</td></tr>");
             });
-            $("h4").html(data.meta.Date);
+            $("h4").html(data.meta.Date.replace("Vertretungen", "Substitutes").split("/")[0]);
             $("#title").html(data.meta.Class);
         }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
     });

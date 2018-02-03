@@ -13,7 +13,7 @@ import (
 
 func Parser(c *gin.Context) {
 	k := c.Param("class")
-	if k == "Entfall" {
+	if k == "Cancelled" {
 		k = "___"
 	} else if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(k) {
 		c.JSON(400, gin.H{"message": "Invalid class!"})
