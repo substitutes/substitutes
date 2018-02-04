@@ -1,5 +1,9 @@
 # UNTIS Wrapper
 
+[![codebeat badge](https://codebeat.co/badges/3b86030a-201a-4777-aff6-a5095d4c5958)](https://codebeat.co/projects/github-com-fronbasal-substitutes-master)
+[![Go Report Card](https://goreportcard.com/badge/github.com/fronbasal/substitutes)](https://goreportcard.com/report/github.com/fronbasal/substitutes)
+
+
 This is a wrapper I wrote for UNTIS 2018 Web.
 
 The normal web interface of UNTIS is really trashy so I just rewrote it ( ͡° ͜ʖ ͡°)
