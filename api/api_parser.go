@@ -92,8 +92,8 @@ func Parser(c *gin.Context) {
 	})
 
 	var meta struct {
-		Date  string
-		Class string
+		Date  string `json:"date"`
+		Class string `json:"class"`
 	}
 	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
 	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
