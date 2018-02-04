@@ -2,14 +2,14 @@ package structs
 
 // Substitutes struct for holding data
 type Substitutes struct {
-	Class     string
-	Hour      string
-	Teacher   string
-	Subject   string
-	Room      string
-	Type      string
-	Notes     string
-	Cancelled bool
+	Class     string `json:"class"`
+	Hour      string `json:"hour"`
+	Teacher   string `json:"teacher"`
+	Subject   string `json:"subject"`
+	Room      string `json:"room"`
+	Type      string `json:"type"`
+	Notes     string `json:"notes"`
+	Cancelled bool   `json:"cancelled"`
 }
 
 // Credentials struct for importing credentials
