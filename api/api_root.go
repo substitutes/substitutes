@@ -2,10 +2,11 @@ package api
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"github.com/gin-gonic/gin"
 	"github.com/fronbasal/substitutes/helpers"
+	"github.com/gin-gonic/gin"
 )
 
+// Root endpoint for listing all classes
 func Root(c *gin.Context) {
 	resp, err := helpers.Request("Druck_Kla.htm")
 	if err != nil {
