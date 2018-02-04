@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
 	vapi "github.com/fronbasal/substitutes/api"
+	"github.com/gin-gonic/gin"
 )
 
 // GinEngine returns an instance of the gin Engine.
