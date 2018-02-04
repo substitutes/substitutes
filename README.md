@@ -1,9 +1,13 @@
 # UNTIS Wrapper
 
-This is a Go API which is intended to replace the crappy webinterface which UNTIS ships to german schools.
+This is a wrapper I wrote for UNTIS 2018 Web.
 
-It is truly horrible, how bad the developers of UNTIS seem to be.
+The normal web interface of UNTIS is really trashy so I just rewrote it ( ͡° ͜ʖ ͡°)
 
-I was so shoked about the interface that I rewrote it.
+Endpoints:
 
-Now open source!
+| Endpoint		| Description				|
+| --------		| -----------				|
+| /api			| List availible classes		|
+| /api/k/{class}	| Show substitutes for a specific class	|
+| /api/t/{teacher}	| Show teachers of substitutes		|
