@@ -17,11 +17,17 @@ func GinEngine() *gin.Engine {
 
 	r.GET("/k/:k", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("k")}) })
 
+	r.GET("/t/:teacher", func(c *gin.Context) {
+		c.HTML(200, "teacher.html", gin.H{"teacher": c.Param("teacher")})
+	})
+
 	api := r.Group("api")
 	{
 		api.GET("/", vapi.Root)
 
-		api.GET("/:class", vapi.Parser)
+		api.GET("/c/:class", vapi.Parser)
+
+		api.GET("/t/:teacher", vapi.Teacher)
 	}
 
 	return r
