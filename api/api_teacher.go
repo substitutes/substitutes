@@ -1,13 +1,15 @@
 package api
 
 import (
-	"github.com/gin-gonic/gin"
-	"net/http"
 	"encoding/json"
-	"github.com/fronbasal/substitutes/structs"
+	"net/http"
 	"strings"
+
+	"github.com/fronbasal/substitutes/structs"
+	"github.com/gin-gonic/gin"
 )
 
+// Teacher endpoint for the teacher view
 func Teacher(c *gin.Context) {
 	resp, err := http.Get("http://localhost:5000/api")
 	if err != nil {

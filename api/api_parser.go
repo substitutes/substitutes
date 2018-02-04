@@ -6,11 +6,12 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/djimenez/iconv-go"
-	"github.com/gin-gonic/gin"
 	"github.com/fronbasal/substitutes/helpers"
 	"github.com/fronbasal/substitutes/structs"
+	"github.com/gin-gonic/gin"
 )
 
+// Parser function for returning the endpoint at /api/c/{class}
 func Parser(c *gin.Context) {
 	k := c.Param("class")
 	if k == "Cancelled" {
