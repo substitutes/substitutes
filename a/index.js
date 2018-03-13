@@ -6,7 +6,7 @@
         });
         e.material_select();
         e.change(function () {
-            window.location.pathname = "/k/" + $(this).val();
+            window.location.pathname = "/c/" + $(this).val();
         });
     }).catch(e => console.log(e));
 })();
