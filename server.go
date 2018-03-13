@@ -15,7 +15,7 @@ func GinEngine() *gin.Engine {
 
 	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", nil) })
 
-	r.GET("/k/:k", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("k")}) })
+	r.GET("/c/:c", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("c")}) })
 
 	r.GET("/t/:teacher", func(c *gin.Context) {
 		c.HTML(200, "teacher.html", gin.H{"teacher": c.Param("teacher")})
