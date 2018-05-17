@@ -14,5 +14,4 @@ Endpoints:
 | Endpoint		| Description				|
 | --------		| -----------				|
 | /api			| List availible classes		|
-| /api/k/{class}	| Show substitutes for a specific class	|
-| /api/t/{teacher}	| Show teachers of substitutes		|
+| /api/c/{class}	| Show substitutes for a specific class	|
