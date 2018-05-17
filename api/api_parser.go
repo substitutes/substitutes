@@ -51,40 +51,61 @@ func Parser(c *gin.Context) {
 	doc.Find("table").Last().Find("tr").Each(func(i int, sel *goquery.Selection) {
 		if i != 0 {
 			var v structs.Substitutes
-			sel.Find("td font").Each(func(i int, sel *goquery.Selection) {
+			sel.Find("td").Each(func(i int, sel *goquery.Selection) {
 				t := strings.Replace(sel.Text(), "\n", "", -1)
+				t = strings.TrimSpace(t)
 				switch i {
-				// dis ugly bc fuck html
+				// Parse the HTML table into the struct
 				case 0:
-					// Get the class
-					v.Class = sel.Find("b").Text()
+					v.Date = t
 					break
 				case 1:
-					// The hour
 					v.Hour = t
 					break
 				case 2:
-					// The teacher
-					v.Teacher = strings.Replace(t, "?", " => ", 1)
+					v.Day = t
 					break
 				case 3:
-					// I don't get why i did this
-					/*if strings.Contains(t, "R") {
-						v.Subject = ""
-					} else {
-						// Fucking bullshit
-						v.Subject = t
-					}*/
-					v.Subject = t
+					v.Teacher = t
 					break
 				case 4:
-					v.Room = strings.Replace(t, "?", " => ", 1)
+					v.Time = t
 					break
 				case 5:
-					v.Type = t
+					v.Subject = t
 					break
 				case 6:
-					v.Notes += t
+					v.Type = t
+					break
+				case 7:
+					v.Notes = t
+					break
+				case 8:
+					v.Classes = t
+					break
+				case 9:
+					v.Room = strings.Replace(t, "?", " => ", 1)
+					break
+				case 10:
+					v.After = t
+					break
+				case 11:
+					// Check if there is content
+					v.Cancelled = len(strings.Replace(t, " ", "", -1)) != 0
+					break
+				case 12:
+					matched, err := regexp.MatchString("x|X", t)
+					if err != nil {
+						c.JSON(500, gin.H{"message": "Failed to compile Regex."})
+						return
+					}
+					v.New = matched
+					break
+				case 13:
+					v.Reason = t
+					break
+				case 14:
+					v.Counter = t
 					break
 				}
 			})
