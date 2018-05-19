@@ -23,12 +23,12 @@
         <table class="responsive-table">
             <thead>
             <th>Hour</th>
-	    <th>Time</th>
+            <th>Time</th>
             <th>Teacher</th>
             <th>Subject</th>
             <th>Room</th>
             <th>Type</th>
-	    <th>Reason</th>
+            <th>Reason</th>
             </thead>
             <tbody></tbody>
         </table>
@@ -38,8 +38,9 @@
 <footer class="page-footer teal lighten-2">
     <div class="footer-copyright">
         <div class="container">
-                  Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a href="https://github.com/fronbasal/substitutes">open source!</a>.
-				</div>
+            Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a
+                href="https://github.com/fronbasal/substitutes">open source!</a>.
+        </div>
     </div>
 </footer>
 
@@ -51,13 +52,13 @@
             $.each(data.substitutes, (a, b) => {
                 (b.type === "Cancelled") ? $("tbody").append(
                         "<tr class='teal-text text-lighten-2'><td>" +
-			b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher +
+                        b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher +
                         "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-			"</td><td>" + b.reason + "</td></tr>") : $("tbody").append(
-				"<tr><td>" + b.hour + "</td><td>" + b.time + "</td><td>" +
+                        "</td><td>" + b.reason + "</td></tr>") : $("tbody").append(
+                        "<tr><td>" + b.hour + "</td><td>" + b.time + "</td><td>" +
                         b.teacher +
                         "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-				"</td><td>" + b.reason + "</td></tr>");
+                        "</td><td>" + b.reason + "</td></tr>");
             });
             $("h4").html(data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0]);
             $("#title").html(data.meta.class);
