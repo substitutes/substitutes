@@ -17,10 +17,6 @@ func GinEngine() *gin.Engine {
 
 	r.GET("/c/:c", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("c")}) })
 
-	r.GET("/t/:teacher", func(c *gin.Context) {
-		c.HTML(200, "teacher.html", gin.H{"teacher": c.Param("teacher")})
-	})
-
 	api := r.Group("api")
 	{
 		api.GET("/", vapi.Root)
