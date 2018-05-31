@@ -22,13 +22,15 @@
         <p id="title"></p>
         <table class="responsive-table">
             <thead>
-            <th>Hour</th>
-            <th>Time</th>
-            <th>Teacher</th>
-            <th>Subject</th>
-            <th>Room</th>
-            <th>Type</th>
-            <th>Reason</th>
+            <tr>
+                <th>Hour</th>
+                <th class="hide-extended">Time</th>
+                <th>Teacher</th>
+                <th>Subject</th>
+                <th>Room</th>
+                <th>Type</th>
+                <th class="hide-extended">Reason</th>
+            </tr>
             </thead>
             <tbody></tbody>
         </table>
@@ -46,6 +48,7 @@
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+<script>var c = "{{ .class }}";</script>
 <script src="/a/list.js"></script>
 </body>
 
