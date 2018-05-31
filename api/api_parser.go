@@ -46,13 +46,16 @@ func Parser(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
 		return
 	}
+	var extended bool
 	var substitutes []structs.Substitutes
 	doc.Find("table").Last().Remove()
 	doc.Find("table").Last().Find("tr").Each(func(i int, sel *goquery.Selection) {
 		if i != 0 {
 			var v structs.Substitutes
 			count := len(sel.Find("td").Nodes)
-			if count == 15 {
+			println(count)
+			if count >= 10 /* Not working ,_, */ {
+				extended = true
 				sel.Find("td").Each(func(i int, sel *goquery.Selection) {
 					t := strings.Replace(sel.Text(), "\n", "", -1)
 					t = strings.TrimSpace(t)
@@ -112,6 +115,7 @@ func Parser(c *gin.Context) {
 					}
 				})
 			} else { // Alternative parser, deprecated
+				extended = false
 				sel.Find("td font").Each(func(i int, sel *goquery.Selection) {
 					t := strings.Replace(sel.Text(), "\n", "", -1)
 					switch i {
@@ -148,7 +152,9 @@ func Parser(c *gin.Context) {
 	var meta struct {
 		Date  string `json:"date"`
 		Class string `json:"class"`
+		Extended bool `json:"extended"`
 	}
+	meta.Extended = extended
 	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
 	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
 	c.JSON(200, gin.H{"substitutes": substitutes, "meta": meta})
