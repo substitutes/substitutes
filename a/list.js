@@ -6,14 +6,14 @@
             if (data.meta.extended) {
                 $("tbody").append(
                     "<tr class='text-lighten-2'><td>" +
-                    b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher +
-                    "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
+                    b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher.replace("?", " => ") +
+                    "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
                     "</td><td>" + b.reason + "</td></tr>");
             } else {
                 $("tbody").append(
                     "<tr class='text-lighten-2'><td>" +
-                    b.hour + "</td><td>" + b.teacher +
-                    "</td><td>" + b.subject + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
+                    b.hour + "</td><td>" + b.teacher.replace("?", " => ") +
+                    "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
                     "</td></tr>");
             }
         });
