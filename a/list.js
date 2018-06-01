@@ -1,3 +1,4 @@
+// List.js
 (() => {
     $.getJSON("/api/c/" + c, data => {
         if (!data.meta.extended)
