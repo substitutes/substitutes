@@ -1,3 +1,4 @@
+// IndexJS
 (() => {
     const e = $('select');
     $.getJSON("/api", data => {

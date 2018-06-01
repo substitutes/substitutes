@@ -53,7 +53,6 @@ func Parser(c *gin.Context) {
 		if i != 0 {
 			var v structs.Substitutes
 			count := len(sel.Find("td").Nodes)
-			println(count)
 			if count >= 10 /* Not working ,_, */ {
 				extended = true
 				sel.Find("td").Each(func(i int, sel *goquery.Selection) {
