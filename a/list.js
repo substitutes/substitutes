@@ -9,13 +9,13 @@
                     "<tr class='text-lighten-2'><td>" +
                     b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher.replace("?", " => ") +
                     "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-                    "</td><td>" + b.reason + "</td></tr>");
+                    "</td><td>" + b.notes + "</td><td>" + b.reason + "</td></tr>");
             } else {
                 $("tbody").append(
                     "<tr class='text-lighten-2'><td>" +
                     b.hour + "</td><td>" + b.teacher.replace("?", " => ") +
                     "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-                    "</td></tr>");
+                    "</td><td>" + b.notes + "</td></tr>");
             }
         });
         $("h4").html(data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0]);
