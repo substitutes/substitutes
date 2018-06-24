@@ -1,7 +1,6 @@
 fetch("/api/").then(response => {
     return response.json();
 }).then(data => {
-    console.log(data);
     const el = document.querySelector("select");
     data.forEach(c => {
         let item = document.createElement("option");
