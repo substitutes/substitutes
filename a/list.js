@@ -1,24 +1,20 @@
-// List.js
-(() => {
-    $.getJSON("/api/c/" + c, data => {
-        if (!data.meta.extended)
-            $('.hide-extended').hide()
-        $.each(data.substitutes, (a, b) => {
-            if (data.meta.extended) {
-                $("tbody").append(
-                    "<tr class='text-lighten-2'><td>" +
-                    b.hour + "</td><td>" + b.time + "</td><td>" + b.teacher.replace("?", " => ") +
-                    "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-                    "</td><td>" + b.notes + "</td><td>" + b.reason + "</td></tr>");
-            } else {
-                $("tbody").append(
-                    "<tr class='text-lighten-2'><td>" +
-                    b.hour + "</td><td>" + b.teacher.replace("?", " => ") +
-                    "</td><td>" + b.subject.replace("?", " => ") + "</td><td>" + b.room + "</td><td>" + b.type.replace("Vertretung", "Substitute") +
-                    "</td><td>" + b.notes + "</td></tr>");
-            }
-        });
-        $("h4").html(data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0]);
-        $("#title").html(data.meta.class);
-    }).catch(m => Materialize.toast(m.status + ": " + m.responseJSON.message));
-})();
+fetch("/api/c/" + c).then(res => {
+    return res.json();
+}).then(data => {
+    if (!data.meta.extended)
+        document.querySelector(".hide-extended").remove();
+    data.substitutes.forEach(substitute => {
+        // TODO: Smart fill for this
+        if (data.meta.extended) {
+            document.querySelector("tbody").innerHTML += "<tr class='text-lighten-2'><td>" +
+                substitute.hour + "</td><td>" + substitute.time + "</td><td>" + substitute.teacher.replace("?", " => ") +
+                "</td><td>" + substitute.subject.replace("?", " => ") + "</td><td>" + substitute.room + "</td><td>" + substitute.type.replace("Vertretung", "Substitute") +
+                "</td><td>" + substitute.notes + "</td><td>" + substitute.reason + "</td></tr>";
+        } else {
+            document.querySelector("tbody").innerHTML += "<tr class='text-lighten-2'><td>" +
+                substitute.hour + "</td><td>" + substitute.teacher.replace("?", " => ") +
+                "</td><td>" + substitute.subject.replace("?", " => ") + "</td><td>" + substitute.room + "</td><td>" + substitute.type.replace("Vertretung", "Substitute") +
+                "</td><td>" + substitute.notes + "</td></tr>";
+        }
+    });
+});
