@@ -5,9 +5,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
-
 	"github.com/fronbasal/substitutes/structs"
+	"net/url"
+	"strings"
 )
 
 // Request helper function for making a web request
@@ -38,17 +38,23 @@ func LoadCredentials() structs.Credentials {
 
 // IServLogin for authenticating against IServ
 func IServLogin(username, password string) (bool, error) {
-	body := strings.NewReader(`_username=` + username + `&_password=` + password)
-	req, err := http.NewRequest("POST", "https://steinbart-gym.eu/iserv/login_check", body)
+	form := url.Values{}
+	form.Add("_username", username)
+	form.Add("_password", password)
+	req, err := http.NewRequest("POST", "https://steinbart-gym.eu/iserv/login_check", strings.NewReader(form.Encode()))
 	if err != nil {
 		return false, err
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
+	data, err := ioutil.ReadAll(resp.Body)
+	print(string(data))
+	if err != nil || resp.StatusCode != 200 {
+		log.Println("")
 		return false, err
 	}
 	defer resp.Body.Close()
+	print(resp.Status)
 	location, err := resp.Location()
 	if err != nil {
 		return false, err
