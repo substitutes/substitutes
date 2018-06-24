@@ -2,7 +2,7 @@ fetch("/api/c/" + c).then(res => {
     return res.json();
 }).then(data => {
     if (!data.meta.extended)
-        document.querySelector(".hide-extended").remove();
+        Array.from(document.getElementsByClassName("hide-extended")).forEach(a => a.remove());
     data.substitutes.forEach(substitute => {
         // TODO: Smart fill for this
         if (data.meta.extended) {
