@@ -1,54 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
 <head>
+    <meta charset="utf-8">
     <title>Substitutes</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/css/materialize.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="manifest" href="/a/manifest.json">
-    <meta name="charset" content="utf-8">
     <link rel="icon" href="/a/icons/drawable-xxhdpi/icon.png">
     <link rel="icon" sizes="512x512" href="/a/icons/hiresfavicon.png">
-    <meta name="theme-color" content="#4db6ac">
     <link rel="stylesheet" href="/a/app.css">
 </head>
-
 <body>
-<nav class="teal lighten-2"><a href="/" class="brand-logo center">Substitutes</a></nav>
-<div class="container" id="app">
-    <div class="card-panel grey lighten-3">
-        <h4>Substitutes</h4>
-        <p id="title"></p>
-        <table class="responsive-table">
-            <thead>
-            <tr>
-                <th>Hour</th>
-                <th class="hide-extended">Time</th>
-                <th>Teacher</th>
-                <th>Subject</th>
-                <th>Room</th>
-                <th>Type</th>
-                <th class="hide-extended">Reason</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
+<div class="container">
+    <header class="navbar">
+        <section class="navbar-section">
+            <button class="btn btn-primary" id="clear">Clear</button>
+        </section>
+
+        <section class="navbar-center">
+            <img src="/a/icons/favicon.png" alt="Substitutes" height=42>
+        </section>
+        <section class="navbar-section">
+            <a href="https://github.com/fronbasal/substitutes" class="btn btn-link">GitHub</a>
+        </section>
+    </header>
+</div>
+<div class="push"></div>
+<noscript>Please enable Javascript to make this app work.</noscript>
+
+<div class="container">
+    <h1 id="title">Substitutes</h1>
+    <p id="subtitle"></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Hour</th>
+            <th class="hide-extended">Time</th>
+            <th>Teacher</th>
+            <th>Subject</th>
+            <th>Room</th>
+            <th>Type</th>
+            <th class="hide-extended">Reason</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
 
-<footer class="page-footer teal lighten-2">
-    <div class="footer-copyright">
-        <div class="container">
-            Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a
-                href="https://github.com/fronbasal/substitutes">open source!</a>.
-        </div>
-    </div>
-</footer>
+<div class="container">
+    <footer>
+        <small>Built with golang by <a href="https://fronbasal.de">Daniel Malik</a>. There is an open <a
+                href="https://github.com/fronbasal/substitutes#api-endpoints">API (docs).</a></small>
+    </footer>
+</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script>
-<script>let c = "{{ .class }}";</script>
+
+<script src="/a/common.min.js"></script>
 <script src="/a/list.min.js"></script>
 </body>
-
 </html>

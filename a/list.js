@@ -1,8 +1,13 @@
-fetch("/api/c/" + c).then(res => {
+wrk.$("#clear").onclick = ev => {
+    wrk.s("class", "");
+    window.location = '/';
+};
+
+fetch("/api/c/" + window.location.pathname.split('/')[window.location.pathname.split('/').length-1]).then(res => {
     return res.json();
 }).then(data => {
-    document.querySelector("h4").innerText = data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0];
-    document.querySelector("#title").innerHTML = data.meta.class + ", " + data.meta.date.split("/")[1];
+    document.querySelector("#title").innerText = data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0];
+    document.querySelector("#subtitle").innerHTML = data.meta.class + ", " + data.meta.date.split("/")[1];
     if (!data.meta.extended)
         Array.from(document.getElementsByClassName("hide-extended")).forEach(a => a.remove());
     data.substitutes.forEach(substitute => {

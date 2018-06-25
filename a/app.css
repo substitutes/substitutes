@@ -1,9 +1,16 @@
-body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
+footer {
+    bottom: 2vh;
+    position: absolute;
 }
 
-#app {
-    flex: 1 0 auto;
+div.push {
+    height: 5vh;
+}
+
+table {
+    width: 100%;
+}
+
+th {
+    text-align: left;
 }
