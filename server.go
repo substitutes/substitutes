@@ -24,6 +24,8 @@ func GinEngine() *gin.Engine {
 		api.GET("/c/:class", vapi.Parser)
 
 		api.GET("/t/:teacher", vapi.Teacher)
+
+		api.GET("/version", vapi.Version)
 	}
 
 	return r
