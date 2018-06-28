@@ -3,6 +3,7 @@ package main
 import (
 	vapi "github.com/fronbasal/substitutes/api"
 	"github.com/gin-gonic/gin"
+	"github.com/fronbasal/substitutes/helpers"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -13,9 +14,9 @@ func GinEngine() *gin.Engine {
 
 	r.Static("a", "a")
 
-	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", nil) })
+	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", gin.H{"version": helpers.GetVersionString()}) })
 
-	r.GET("/c/:c", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("c")}) })
+	r.GET("/c/:c", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("c"), "version": helpers.GetVersionString()}) })
 
 	api := r.Group("api")
 	{

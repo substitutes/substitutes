@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"github.com/fronbasal/substitutes/structs"
+	"os/exec"
+	"fmt"
 )
 
 // Request helper function for making a web request
@@ -54,4 +56,28 @@ func IServLogin(username, password string) (bool, error) {
 		return false, err
 	}
 	return location.Path == "/iserv", nil
+}
+
+// GetVersion function for the API
+func GetVersion() (structs.Version, error) {
+	b, err := exec.Command("git", "log", "-1", "--pretty=%B", "--oneline").CombinedOutput()
+	if err != nil {
+		return structs.Version{}, err
+	}
+	data := strings.Split(string(b[:]), " ")
+	// TODO: Check if is release version, dirty = false
+	return structs.Version{Hash: data[0], Message: strings.Replace(strings.Join(data[1:], " "), "\n", "", -1), Dirty: true}, nil
+}
+
+// GetVersionString for the frontend
+func GetVersionString() string {
+	version, err := GetVersion()
+	if err != nil {
+		return ""
+	}
+	dirty := "clean"
+	if version.Dirty {
+		dirty = "dirty"
+	}
+	return fmt.Sprintf("#%s-%s: %s", version.Hash, dirty, version.Message)
 }
