@@ -79,5 +79,5 @@ func GetVersionString() string {
 	if version.Dirty {
 		dirty = "dirty"
 	}
-	return fmt.Sprintf("#%s-%s: %s", version.Hash, dirty, version.Message)
+	return fmt.Sprintf("%s-%s: %s", version.Hash, dirty, version.Message)
 }
