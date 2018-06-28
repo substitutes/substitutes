@@ -25,3 +25,10 @@ type Credentials struct {
 	Password string `json:"password"`
 	Host     string `json:"host"`
 }
+
+// Version struct for displaying current application versoin
+type Version struct {
+	Dirty   bool   `json:"dirty"`
+	Hash    string `json:"hash"`
+	Message string `json:"message"`
+}
