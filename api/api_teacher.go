@@ -11,6 +11,7 @@ import (
 
 // Teacher endpoint for the teacher view
 func Teacher(c *gin.Context) {
+	// TODO: Variable host
 	resp, err := http.Get("http://localhost:5000/api")
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
