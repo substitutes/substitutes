@@ -9,8 +9,8 @@ import (
 // Root endpoint for listing all classes
 func Root(c *gin.Context) {
 	resp, err := helpers.Request("Druck_Kla.htm")
-	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
+	if err != nil || resp.StatusCode != 200 {
+		c.JSON(500, gin.H{"message": "Failed to make request", "status": resp.Status})
 		return
 	}
 	defer resp.Body.Close()

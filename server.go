@@ -4,10 +4,14 @@ import (
 	vapi "github.com/fronbasal/substitutes/api"
 	"github.com/gin-gonic/gin"
 	"github.com/fronbasal/substitutes/helpers"
+	"fmt"
 )
 
 // GinEngine returns an instance of the gin Engine.
 func GinEngine() *gin.Engine {
+	// Check if environment variables have been set correctly
+	fmt.Println(helpers.LoadCredentials())
+
 	r := gin.Default()
 
 	r.LoadHTMLGlob("ui/*")

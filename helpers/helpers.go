@@ -1,8 +1,6 @@
 package helpers
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
@@ -10,6 +8,7 @@ import (
 	"github.com/fronbasal/substitutes/structs"
 	"os/exec"
 	"fmt"
+	"os"
 )
 
 // Request helper function for making a web request
@@ -27,18 +26,19 @@ func Request(url string) (*http.Response, error) {
 	return resp, nil
 }
 
-// LoadCredentials helper functions for loading credentials.json
+// LoadCredentials helper functions for loading credentials
 func LoadCredentials() structs.Credentials {
-	b, err := ioutil.ReadFile("credentials.json")
-	if err != nil {
-		log.Fatal("Failed to read config file!")
-	}
 	var c structs.Credentials
-	json.Unmarshal(b, &c)
+	c.Username = os.Getenv("SUBSTITUTES_USERNAME")
+	c.Password = os.Getenv("SUBSTITUTES_PASSWORD")
+	c.Host = os.Getenv("SUBSTITUTES_HOST")
+	if c.Username == "" || c.Password == "" || c.Host == "" {
+		log.Fatal("Failed to initialize application: environment variable(s) are not set.")
+	}
 	return c
 }
 
-// IServLogin for authenticating against IServ
+// IServLogin for authenticating against IServ (WIP)
 func IServLogin(username, password string) (bool, error) {
 	body := strings.NewReader(`_username=` + username + `&_password=` + password)
 	req, err := http.NewRequest("POST", "https://steinbart-gym.eu/iserv/login_check", body)
@@ -66,7 +66,7 @@ func GetVersion() (structs.Version, error) {
 	}
 	data := strings.Split(string(b[:]), " ")
 	// TODO: Check if is release version, dirty = false
-	return structs.Version{Hash: data[0], Message: strings.Replace(strings.Join(data[1:], " "), "\n", "", -1), Dirty: true}, nil
+	return structs.Version{Hash: data[0], Message: strings.Replace(strings.Join(data[1:], " "), "\n", "", -1), Dirty: true /* TODO: detect if dirty build */ }, nil
 }
 
 // GetVersionString for the frontend
