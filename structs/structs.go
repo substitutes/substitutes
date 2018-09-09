@@ -1,7 +1,7 @@
 package structs
 
-// Substitutes struct for holding data
-type Substitutes struct {
+// Substitute struct for holding data
+type Substitute struct {
 	Date      string `json:"date"`
 	Hour      string `json:"hour"`
 	Day       string `json:"day"`

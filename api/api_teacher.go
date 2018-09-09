@@ -24,7 +24,7 @@ func Teacher(c *gin.Context) {
 			Date  string `json:"date"`
 			Class string `json:"class"`
 		} `json:"meta"`
-		Substitutes []structs.Substitutes `json:"substitutes"`
+		Substitutes []structs.Substitute `json:"substitutes"`
 	}
 
 	type multiResponse struct {
@@ -32,7 +32,7 @@ func Teacher(c *gin.Context) {
 			Date  string `json:"date"`
 			Class string `json:"class"`
 		} `json:"meta"`
-		Substitute structs.Substitutes `json:"substitute"`
+		Substitute structs.Substitute `json:"substitute"`
 	}
 
 	var teachers []multiResponse

@@ -47,11 +47,11 @@ func Parser(c *gin.Context) {
 		return
 	}
 	var extended bool
-	var substitutes []structs.Substitutes
+	var substitutes []structs.Substitute
 	doc.Find("table").Last().Remove()
 	doc.Find("table").Last().Find("tr").Each(func(i int, sel *goquery.Selection) {
 		if i != 0 {
-			var v structs.Substitutes
+			var v structs.Substitute
 			count := len(sel.Find("td").Nodes)
 			if count >= 10 /* Not working ,_, */ {
 				extended = true
