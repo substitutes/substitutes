@@ -9,6 +9,9 @@ import (
 	"github.com/substitutes/substitutes/helpers"
 	"github.com/substitutes/substitutes/structs"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
+	"io/ioutil"
+	"bytes"
 )
 
 // Parser function for returning the endpoint at /api/c/{class}
@@ -21,6 +24,21 @@ func Parser(c *gin.Context) {
 		return
 	}
 	resp, err := helpers.Request("Druck_Kla_" + k + ".htm")
+
+	defer resp.Body.Close()
+
+	if err != nil {
+		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
+		return
+	}
+	// DEBUG!
+
+	f, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		c.JSON(500, gin.H{"message": "Failed to read body"})
+		return
+	}
 	if resp.StatusCode == 404 {
 		c.JSON(404, gin.H{"message": "Not found."})
 		return
@@ -29,19 +47,17 @@ func Parser(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "Expected 200, got: " + resp.Status})
 		return
 	}
-	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
-		return
-	}
-	defer resp.Body.Close()
 
-	utfBody, err := iconv.NewReader(resp.Body, "iso-8859-1", "utf-8")
+	body := make([]byte, len(f))
+	// TODO: Handle errors.
+	iconv.Convert(f, body, "iso-8859-1", "utf-8")
+
 	if err != nil {
 		c.JSON(500, gin.H{"message": "Failed to decompose UTF8"})
 		return
 	}
 
-	doc, err := goquery.NewDocumentFromReader(utfBody)
+	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(body))
 	if err != nil {
 		c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
 		return
@@ -149,12 +165,29 @@ func Parser(c *gin.Context) {
 	})
 
 	var meta struct {
-		Date  string `json:"date"`
-		Class string `json:"class"`
-		Extended bool `json:"extended"`
+		Date     string `json:"date"`
+		Class    string `json:"class"`
+		Extended bool   `json:"extended"`
+		Updated  string `json:"updated"`
 	}
+
+	if len(substitutes) == 1 && substitutes[0].Date == "" {
+		// Too short/non-existent, log request.
+		// Read body
+		r, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			logrus.Warn("Failed to read body of error - this is fatal.")
+			c.JSON(500, nil)
+			return
+		}
+		logrus.Warnf("Warning! There has been an empty request!\n\nStatus: %v\nContent: %v\nLength: %v", resp.StatusCode, r, resp.ContentLength)
+		c.JSON(204, nil)
+		return
+	}
+
 	meta.Extended = extended
 	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
 	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
+	meta.Updated = doc.Find("table").First().Find("tr").Last().Find("td").Last().Text()
 	c.JSON(200, gin.H{"substitutes": substitutes, "meta": meta})
 }

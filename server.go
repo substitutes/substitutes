@@ -4,11 +4,27 @@ import (
 	vapi "github.com/substitutes/substitutes/api"
 	"github.com/gin-gonic/gin"
 	"github.com/substitutes/substitutes/helpers"
+	"gopkg.in/alecthomas/kingpin.v2"
+	"github.com/sirupsen/logrus"
+	"github.com/gin-gonic/contrib/ginrus"
+)
+
+var (
+	verbose = kingpin.Flag("verbose", "Enable verbose output").Short('v').Bool()
 )
 
 // GinEngine returns an instance of the gin Engine.
 func GinEngine() *gin.Engine {
-	r := gin.Default()
+	kingpin.Parse()
+
+	logrus.SetLevel(logrus.WarnLevel)
+	if *verbose {
+		logrus.SetLevel(logrus.DebugLevel)
+	}
+
+	r := gin.New()
+
+	r.Use(gin.Recovery(), ginrus.Ginrus(logrus.StandardLogger(), "15:04:05", true))
 
 	r.LoadHTMLGlob("ui/*")
 
@@ -28,6 +44,8 @@ func GinEngine() *gin.Engine {
 
 		api.GET("/version", vapi.Version)
 	}
+
+	logrus.Debug("Initialized application.")
 
 	return r
 }
