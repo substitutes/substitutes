@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/fronbasal/substitutes/structs"
+	"github.com/substitutes/substitutes/structs"
 	"os/exec"
 	"fmt"
 )

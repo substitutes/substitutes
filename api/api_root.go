@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"github.com/fronbasal/substitutes/helpers"
+	"github.com/substitutes/substitutes/helpers"
 	"github.com/gin-gonic/gin"
 )
 

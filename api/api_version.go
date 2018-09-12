@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/fronbasal/substitutes/helpers"
+	"github.com/substitutes/substitutes/helpers"
 )
 
 // Version endpoint for showing the current git commit and version history

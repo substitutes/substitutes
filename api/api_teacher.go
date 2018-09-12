@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/fronbasal/substitutes/structs"
+	"github.com/substitutes/substitutes/structs"
 	"github.com/gin-gonic/gin"
 )
 

@@ -1,9 +1,9 @@
 package main
 
 import (
-	vapi "github.com/fronbasal/substitutes/api"
+	vapi "github.com/substitutes/substitutes/api"
 	"github.com/gin-gonic/gin"
-	"github.com/fronbasal/substitutes/helpers"
+	"github.com/substitutes/substitutes/helpers"
 )
 
 // GinEngine returns an instance of the gin Engine.

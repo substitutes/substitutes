@@ -6,8 +6,8 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/djimenez/iconv-go"
-	"github.com/fronbasal/substitutes/helpers"
-	"github.com/fronbasal/substitutes/structs"
+	"github.com/substitutes/substitutes/helpers"
+	"github.com/substitutes/substitutes/structs"
 	"github.com/gin-gonic/gin"
 )
 
