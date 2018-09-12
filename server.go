@@ -7,6 +7,7 @@ import (
 	"gopkg.in/alecthomas/kingpin.v2"
 	"github.com/sirupsen/logrus"
 	"github.com/gin-gonic/contrib/ginrus"
+	"time"
 )
 
 var (
@@ -24,7 +25,7 @@ func GinEngine() *gin.Engine {
 
 	r := gin.New()
 
-	r.Use(gin.Recovery(), ginrus.Ginrus(logrus.StandardLogger(), "15:04:05", true))
+	r.Use(gin.Recovery(), ginrus.Ginrus(logrus.StandardLogger(), time.RFC822, true))
 
 	r.LoadHTMLGlob("ui/*")
 
