@@ -1,41 +1,27 @@
 package helpers
 
 import (
-	"encoding/json"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"strings"
 
 	"github.com/substitutes/substitutes/structs"
 	"os/exec"
 	"fmt"
+	"github.com/spf13/viper"
 )
 
 // Request helper function for making a web request
 func Request(url string) (*http.Response, error) {
-	credentials := LoadCredentials()
-	req, err := http.NewRequest("GET", credentials.Host+url, nil)
+	req, err := http.NewRequest("GET", viper.GetString("url")+url, nil)
 	if err != nil {
 		return nil, err
 	}
-	req.SetBasicAuth(credentials.Username, credentials.Password)
+	req.SetBasicAuth(viper.GetString("username"), viper.GetString("password"))
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
 	}
 	return resp, nil
-}
-
-// LoadCredentials helper functions for loading credentials.json
-func LoadCredentials() structs.Credentials {
-	b, err := ioutil.ReadFile("credentials.json")
-	if err != nil {
-		log.Fatal("Failed to read config file!")
-	}
-	var c structs.Credentials
-	json.Unmarshal(b, &c)
-	return c
 }
 
 // IServLogin for authenticating against IServ

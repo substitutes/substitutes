@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/gin-gonic/contrib/ginrus"
 	"time"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -52,5 +53,15 @@ func GinEngine() *gin.Engine {
 }
 
 func main() {
+	viper.SetConfigName("config")
+	viper.AddConfigPath(".")
+	viper.SetEnvPrefix("substitutes")
+	viper.AutomaticEnv()
+	viper.SetConfigType("yaml")
+
+	if err := viper.ReadInConfig(); err != nil {
+		logrus.Fatal("Failed to read configuration file: ", err)
+	}
+
 	GinEngine().Run(":5000")
 }

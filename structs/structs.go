@@ -19,13 +19,6 @@ type Substitute struct {
 	Counter   string `json:"counter"`
 }
 
-// Credentials struct for importing credentials
-type Credentials struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Host     string `json:"host"`
-}
-
 // Version struct for displaying current application versoin
 type Version struct {
 	Dirty   bool   `json:"dirty"`

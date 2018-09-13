@@ -4,3 +4,4 @@ gin-bin
 vendor/
 credentials.json
 gin-bin
+config.yaml
