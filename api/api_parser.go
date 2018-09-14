@@ -9,7 +9,6 @@ import (
 	"github.com/substitutes/substitutes/helpers"
 	"github.com/substitutes/substitutes/structs"
 	"github.com/gin-gonic/gin"
-	"github.com/sirupsen/logrus"
 	"io/ioutil"
 	"bytes"
 )
@@ -173,14 +172,6 @@ func Parser(c *gin.Context) {
 
 	if len(substitutes) == 1 && substitutes[0].Date == "" {
 		// Too short/non-existent, log request.
-		// Read body
-		r, err := ioutil.ReadAll(resp.Body)
-		if err != nil {
-			logrus.Warn("Failed to read body of error - this is fatal.")
-			c.JSON(500, nil)
-			return
-		}
-		logrus.Warnf("Warning! There has been an empty request!\n\nStatus: %v\nContent: %v\nLength: %v", resp.StatusCode, r, resp.ContentLength)
 		c.JSON(204, nil)
 		return
 	}

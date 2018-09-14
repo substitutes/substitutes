@@ -4,30 +4,15 @@ import (
 	vapi "github.com/substitutes/substitutes/api"
 	"github.com/gin-gonic/gin"
 	"github.com/substitutes/substitutes/helpers"
-	"gopkg.in/alecthomas/kingpin.v2"
-	"github.com/sirupsen/logrus"
-	"github.com/gin-gonic/contrib/ginrus"
-	"time"
 	"github.com/spf13/viper"
-)
-
-var (
-	verbose = kingpin.Flag("verbose", "Enable verbose output").Short('v').Bool()
+	"log"
 )
 
 // GinEngine returns an instance of the gin Engine.
 func GinEngine() *gin.Engine {
-	kingpin.Parse()
 
-	logrus.SetLevel(logrus.WarnLevel)
-	if *verbose {
-		logrus.SetLevel(logrus.DebugLevel)
-	}
-
-	r := gin.New()
-
-	r.Use(gin.Recovery(), ginrus.Ginrus(logrus.StandardLogger(), time.RFC822, true))
-
+	r := gin.Default()
+	
 	r.LoadHTMLGlob("ui/*")
 
 	r.Static("a", "a")
@@ -47,8 +32,6 @@ func GinEngine() *gin.Engine {
 		api.GET("/version", vapi.Version)
 	}
 
-	logrus.Debug("Initialized application.")
-
 	return r
 }
 
@@ -60,7 +43,7 @@ func main() {
 	viper.SetConfigType("yaml")
 
 	if err := viper.ReadInConfig(); err != nil {
-		logrus.Fatal("Failed to read configuration file: ", err)
+		log.Fatal("Failed to read configuration file: ", err)
 	}
 
 	GinEngine().Run(":5000")
