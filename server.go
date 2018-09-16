@@ -44,7 +44,7 @@ func main() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		// Environment variables are also allowed
-		log.Warn("Failed to read configuration file: ", err)
+		log.Println("[WARN] Failed to read configuration file: ", err)
 	}
 
 	GinEngine().Run(":5000")
