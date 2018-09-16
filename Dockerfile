@@ -1,4 +1,4 @@
-FROM alpine
+FROM golang:latest
 
 RUN mkdir /go/src/substitutes
 WORKDIR /go/src/substitutes
