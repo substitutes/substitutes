@@ -12,7 +12,7 @@ import (
 func GinEngine() *gin.Engine {
 
 	r := gin.Default()
-	
+
 	r.LoadHTMLGlob("ui/*")
 
 	r.Static("a", "a")
