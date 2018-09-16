@@ -6,3 +6,4 @@ credentials.json
 gin-bin
 substitutes
 config.yaml
+.env

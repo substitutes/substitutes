@@ -4,9 +4,7 @@ services:
   app:
     ports:
       - 5000:5000
-    environment:
-      - SUBSTITUTES_USERNAME: 
-      - SUBSTITUTES_PASSWORD: 
-      - SUBSTITUTES_URL:
+    env_file:
+      - .env
     image: substitutes/substitutes
     build: .

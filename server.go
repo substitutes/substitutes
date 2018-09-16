@@ -43,7 +43,8 @@ func main() {
 	viper.SetConfigType("yaml")
 
 	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal("Failed to read configuration file: ", err)
+		// Environment variables are also allowed
+		log.Warn("Failed to read configuration file: ", err)
 	}
 
 	GinEngine().Run(":5000")
