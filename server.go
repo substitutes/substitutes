@@ -10,7 +10,6 @@ import (
 
 // GinEngine returns an instance of the gin Engine.
 func GinEngine() *gin.Engine {
-<<<<<<< HEAD
 
 	r := gin.Default()
 
