@@ -24,13 +24,13 @@ func Parser(c *gin.Context) {
 	}
 	resp, err := helpers.Request("Druck_Kla_" + k + ".htm")
 
-	defer resp.Body.Close()
-
 	if err != nil {
 		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
 		return
 	}
-	// DEBUG!
+
+	// Defer after checking.
+	defer resp.Body.Close()
 
 	f, err := ioutil.ReadAll(resp.Body)
 
