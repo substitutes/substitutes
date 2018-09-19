@@ -15,29 +15,34 @@
 </head>
 
 <body>
-<nav class="teal lighten-2"><a href="/" class="brand-logo center">Substitutes</a></nav>
-<div class="container" id="app">
-    <div class="card-panel grey lighten-3">
-        <h4>Substitutes</h4>
-        <p id="title"></p>
-        <table class="responsive-table">
-            <thead>
-            <tr>
-                <th>Hour</th>
-                <th class="hide-extended">Time</th>
-                <th>Teacher</th>
-                <th>Subject</th>
-                <th>Room</th>
-                <th>Type</th>
-                <th class="hide-extended">Reason</th>
-            </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+<nav class="indigo">
+    <div class="nav-wrapper container">
+        <div class="col s12 center">
+            <a href="/" class="breadcrumb">Substitutes</a>
+            <a href="#" class="breadcrumb">{{ .class }}</a>
+        </div>
     </div>
+</nav>
+<div class="container" id="app">
+    <h4>Substitutes</h4>
+    <p id="title"></p>
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th>Hour</th>
+            <th class="hide-extended">Time</th>
+            <th>Teacher</th>
+            <th>Subject</th>
+            <th>Room</th>
+            <th>Type</th>
+            <th class="hide-extended">Reason</th>
+        </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
 
-<footer class="page-footer teal lighten-2">
+<footer class="page-footer indigo">
     <div class="footer-copyright">
         <div class="container">
             Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a
