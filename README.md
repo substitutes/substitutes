@@ -6,6 +6,9 @@ Substitutes is an API wrapper and frontend for UNTIS 2018 web.
 [![codebeat badge](https://codebeat.co/badges/3b86030a-201a-4777-aff6-a5095d4c5958)](https://codebeat.co/projects/github-com-fronbasal-substitutes-master)
 [![Go Report Card](https://goreportcard.com/badge/github.com/fronbasal/substitutes)](https://goreportcard.com/report/github.com/fronbasal/substitutes)
 [![Maintainability](https://api.codeclimate.com/v1/badges/009d317bc648fadaf7ec/maintainability)](https://codeclimate.com/github/fronbasal/substitutes/maintainability)
+[![Build Status](https://travis-ci.com/substitutes/substitutes.svg?branch=master)](https://travis-ci.com/substitutes/substitutes)
+[![Docker Build Status](https://img.shields.io/docker/build/substitutes/substitutes.svg)](https://hub.docker.com/r/substitutes/substitutes/)
+[![Docker Automated build](https://img.shields.io/docker/automated/substitutes/substitutes.svg)](https://hub.docker.com/r/substitutes/substitutes/)
 
 ## About
 
@@ -21,7 +24,7 @@ The default interface of UNTIS is outdated and should be deprecated. This progra
 ## Installation
 
 You may utilize the Dockerfile to run this program. Please make sure to create/mount the credentials.json file with the credentials of the school.
-There is a prebuilt docker image on [Docker Hub](https://hub.docker.com/r/fronbasal/substitutes).
+There is a prebuilt docker image on [Docker Hub](https://hub.docker.com/r/substitutes/substitutes).
 
 You can also use the go toolchain to run this application using `go get`.
 
