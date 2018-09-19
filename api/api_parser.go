@@ -170,12 +170,6 @@ func Parser(c *gin.Context) {
 		Updated  string `json:"updated"`
 	}
 
-	if len(substitutes) == 1 && substitutes[0].Date == "" {
-		// Too short/non-existent, log request.
-		c.JSON(204, nil)
-		return
-	}
-
 	meta.Extended = extended
 	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
 	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)

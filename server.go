@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/substitutes/substitutes/helpers"
 	"github.com/spf13/viper"
-	"log"
+	log "github.com/sirupsen/logrus"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -44,8 +44,9 @@ func main() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		// Environment variables are also allowed
-		log.Println("[WARN] Failed to read configuration file: ", err)
+		log.Warn("Failed to read configuration file: ", err)
 	}
+	log.Info("Initialized application")
 
 	GinEngine().Run(":5000")
 }
