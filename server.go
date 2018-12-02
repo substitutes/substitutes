@@ -1,11 +1,12 @@
 package main
 
 import (
-	vapi "github.com/substitutes/substitutes/api"
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"github.com/substitutes/substitutes/helpers"
-	"github.com/spf13/viper"
 	log "github.com/sirupsen/logrus"
+	"github.com/spf13/viper"
+	vapi "github.com/substitutes/substitutes/api"
+	"github.com/substitutes/substitutes/helpers"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -13,13 +14,20 @@ func GinEngine() *gin.Engine {
 
 	r := gin.Default()
 
-	r.LoadHTMLGlob("ui/*")
+	// Create the custom multitemplate renderer
+	r.HTMLRender = newRenderer()
 
+	// Create the static directory and path
 	r.Static("a", "a")
 
-	r.GET("/", func(c *gin.Context) { c.HTML(200, "index.html", gin.H{"version": helpers.GetVersionString()}) })
+	// Create the index view
+	r.GET("/", func(c *gin.Context) {
+		c.HTML(200, "index", gin.H{"version": helpers.GetVersionString()})
+	})
 
-	r.GET("/c/:c", func(c *gin.Context) { c.HTML(200, "list.html", gin.H{"class": c.Param("c"), "version": helpers.GetVersionString()}) })
+	r.GET("/c/:c", func(c *gin.Context) {
+		c.HTML(200, "list", gin.H{"class": c.Param("c"), "version": helpers.GetVersionString()})
+	})
 
 	api := r.Group("api")
 	{
@@ -49,4 +57,11 @@ func main() {
 	log.Info("Initialized application")
 
 	GinEngine().Run(":5000")
+}
+
+func newRenderer() multitemplate.Renderer {
+	r := multitemplate.NewRenderer()
+	r.AddFromFiles("index", "ui/base.html", "ui/index.html")
+	r.AddFromFiles("list", "ui/base.html", "ui/list.html")
+	return r
 }

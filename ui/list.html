@@ -1,59 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+{{define "content"}}
+<h4>Substitutes</h4>
+<p id="title"></p>
+<table class="responsive-table">
+    <thead>
+    <tr>
+        <th>Hour</th>
+        <th class="hide-extended">Time</th>
+        <th>Teacher</th>
+        <th>Subject</th>
+        <th>Room</th>
+        <th>Type</th>
+        <th class="hide-extended">Reason</th>
+    </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+{{end}}
 
-<head>
-    <title>Substitutes</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/a/manifest.json">
-    <meta name="charset" content="utf-8">
-    <link rel="icon" href="/a/icons/drawable-xxhdpi/icon.png">
-    <link rel="icon" sizes="512x512" href="/a/icons/hiresfavicon.png">
-    <meta name="theme-color" content="#4db6ac">
-    <link rel="stylesheet" href="/a/app.css">
-</head>
-
-<body>
-<nav class="indigo">
-    <div class="nav-wrapper container">
-        <div class="col s12 center">
-            <a href="/" class="breadcrumb">Substitutes</a>
-            <a href="#" class="breadcrumb">{{ .class }}</a>
-        </div>
-    </div>
-</nav>
-<div class="container" id="app">
-    <h4>Substitutes</h4>
-    <p id="title"></p>
-    <table class="responsive-table">
-        <thead>
-        <tr>
-            <th>Hour</th>
-            <th class="hide-extended">Time</th>
-            <th>Teacher</th>
-            <th>Subject</th>
-            <th>Room</th>
-            <th>Type</th>
-            <th class="hide-extended">Reason</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-</div>
-
-<footer class="page-footer indigo">
-    <div class="footer-copyright">
-        <div class="container">
-            Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a
-                href="https://github.com/substitutes/substitutes">open source!</a>. {{ .version }}.
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script>let c = "{{ .class }}";</script>
-<script src="/a/list.min.js"></script>
-</body>
-
-</html>
+{{define "scripts"}}
+<script src="/a/list.js"></script>
+{{end}}

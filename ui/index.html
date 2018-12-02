@@ -1,37 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{{define "content"}}
+<h3>Classes</h3>
+<div class="collection"></div>
+{{end}}
 
-<head>
-    <title>Substitutes</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="/a/manifest.json">
-    <link rel="icon" href="/a/icons/drawable-xxhdpi/icon.png">
-    <meta name="theme-color" content="#4db6ac">
-    <link rel="icon" sizes="512x512" href="/a/icons/hiresfavicon.png">
-    <link rel="stylesheet" href="/a/app.css">
-</head>
-
-<body>
-<nav class="indigo"><a href="/" class="brand-logo center">Substitutes</a></nav>
-<div class="container" id="app">
-    <h3>Classes</h3>
-    <div class="collection"></div>
-</div>
-
-
-<footer class="page-footer indigo">
-    <div class="footer-copyright">
-        <div class="container">
-            Made with love by Daniel Malik (<a href="https://fronbasal.de">@fronbasal</a>). This project is <a
-                href="https://github.com/substitutes/substitutes">open source!</a>. {{ .version }}.
-        </div>
-    </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-<script src="/a/index.min.js"></script>
-</body>
-
-</html>
+{{define "scripts"}}
+<script src="/a/index.js"></script>
+{{end}}
