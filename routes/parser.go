@@ -1,31 +1,32 @@
-package api
+package routes
 
 import (
+	"errors"
 	"regexp"
 	"strings"
 
+	"bytes"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/djimenez/iconv-go"
+	"github.com/gin-gonic/gin"
 	"github.com/substitutes/substitutes/helpers"
 	"github.com/substitutes/substitutes/structs"
-	"github.com/gin-gonic/gin"
 	"io/ioutil"
-	"bytes"
 )
 
-// Parser function for returning the endpoint at /api/c/{class}
-func Parser(c *gin.Context) {
+// Parser function for returning the endpoint at /routes/c/{class}
+func (ctl *Controller) Parser(c *gin.Context) {
 	k := c.Param("class")
 	if k == "Cancelled" {
 		k = "___"
 	} else if !regexp.MustCompile(`^[A-Za-z0-9]+$`).MatchString(k) {
-		c.JSON(400, gin.H{"message": "Invalid class!"})
+		NewAPIError("Invalid class", errors.New("class not valid")).Throw(c, 400)
 		return
 	}
 	resp, err := helpers.Request("Druck_Kla_" + k + ".htm")
 
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
+		NewAPIError("Failed to make request", err).Throw(c, 500)
 		return
 	}
 
@@ -35,15 +36,15 @@ func Parser(c *gin.Context) {
 	f, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to read body"})
+		NewAPIError("Failed to read body", err).Throw(c, 500)
 		return
 	}
 	if resp.StatusCode == 404 {
-		c.JSON(404, gin.H{"message": "Not found."})
+		NewAPIError("Could not find site", nil).Throw(c, 404)
 		return
 	}
 	if resp.StatusCode != 200 {
-		c.JSON(500, gin.H{"message": "Expected 200, got: " + resp.Status})
+		NewAPIError("Did not receive status 200", errors.New(resp.Status)).Throw(c, 500)
 		return
 	}
 
@@ -52,13 +53,13 @@ func Parser(c *gin.Context) {
 	iconv.Convert(f, body, "iso-8859-1", "utf-8")
 
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to decompose UTF8"})
+		NewAPIError("Failed to decompose UTF8", err).Throw(c, 500)
 		return
 	}
 
 	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(body))
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
+		NewAPIError("Failed to read document", err).Throw(c, 500)
 		return
 	}
 	var extended bool
@@ -115,7 +116,7 @@ func Parser(c *gin.Context) {
 					case 12:
 						matched, err := regexp.MatchString("x|X", t)
 						if err != nil {
-							c.JSON(500, gin.H{"message": "Failed to compile Regex."})
+							NewAPIError("Failed to compile Regex", err).Throw(c, 500)
 							return
 						}
 						v.New = matched

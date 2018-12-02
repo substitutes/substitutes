@@ -5,8 +5,8 @@ import (
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
-	vapi "github.com/substitutes/substitutes/api"
 	"github.com/substitutes/substitutes/helpers"
+	vapi "github.com/substitutes/substitutes/routes"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -29,15 +29,17 @@ func GinEngine() *gin.Engine {
 		c.HTML(200, "list", gin.H{"class": c.Param("c"), "version": helpers.GetVersionString()})
 	})
 
-	api := r.Group("api")
+	ctl := vapi.NewController()
+
+	api := r.Group("routes")
 	{
 		api.GET("/", vapi.Root)
 
-		api.GET("/c/:class", vapi.Parser)
+		api.GET("/c/:class", ctl.Parser)
 
-		api.GET("/t/:teacher", vapi.Teacher)
+		api.GET("/t/:teacher", ctl.Teacher)
 
-		api.GET("/version", vapi.Version)
+		api.GET("/version", ctl.Version)
 	}
 
 	return r

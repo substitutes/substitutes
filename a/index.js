@@ -1,4 +1,4 @@
-fetch("/api/").catch(e => M.toast({html: e})).then(response => {
+fetch("/routes/").catch(e => M.toast({html: e})).then(response => {
     return response.json();
 }).then(data => {
     const el = document.querySelector(".collection");

@@ -1,19 +1,19 @@
-package api
+package routes
 
 import (
 	"encoding/json"
 	"net/http"
 	"strings"
 
-	"github.com/substitutes/substitutes/structs"
 	"github.com/gin-gonic/gin"
+	"github.com/substitutes/substitutes/structs"
 )
 
 // Teacher endpoint for the teacher view
-func Teacher(c *gin.Context) {
-	resp, err := http.Get("http://localhost:5000/api")
+func (ctl *Controller) Teacher(c *gin.Context) {
+	resp, err := http.Get("http://localhost:5000/routes")
 	if err != nil {
-		c.JSON(500, gin.H{"error": err.Error()})
+		NewAPIError("Failed to request API", err).Throw(c, 500)
 		return
 	}
 	defer resp.Body.Close()
@@ -38,14 +38,14 @@ func Teacher(c *gin.Context) {
 	var teachers []multiResponse
 
 	for _, class := range v {
-		apiResp, err := http.Get("http://localhost:5000/api/c/" + class)
+		apiResp, err := http.Get("http://localhost:5000/routes/c/" + class)
 		if err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			NewAPIError("Failed to request API", err).Throw(c, 500)
 			return
 		}
 		var r response
 		if err := json.NewDecoder(apiResp.Body).Decode(&r); err != nil {
-			c.JSON(500, gin.H{"error": err.Error()})
+			NewAPIError("Failed to decode API", err).Throw(c, 500)
 			return
 		}
 
@@ -60,5 +60,4 @@ func Teacher(c *gin.Context) {
 	}
 
 	c.JSON(200, teachers)
-
 }
