@@ -31,7 +31,7 @@ func GinEngine() *gin.Engine {
 
 	ctl := vapi.NewController()
 
-	api := r.Group("routes")
+	api := r.Group("api")
 	{
 		api.GET("/", vapi.Root)
 
