@@ -7,6 +7,7 @@ import (
 	"github.com/spf13/viper"
 	"github.com/substitutes/substitutes/helpers"
 	vapi "github.com/substitutes/substitutes/routes"
+	"strconv"
 )
 
 // GinEngine returns an instance of the gin Engine.
@@ -58,7 +59,8 @@ func main() {
 	}
 	log.Info("Initialized application")
 
-	GinEngine().Run(":5000")
+	viper.SetDefault("port", 5000)
+	GinEngine().Run(":" + strconv.Itoa(viper.GetInt("port")))
 }
 
 func newRenderer() multitemplate.Renderer {
