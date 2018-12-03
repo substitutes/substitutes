@@ -2,12 +2,12 @@ package routes
 
 import (
 	"github.com/PuerkitoBio/goquery"
-	"github.com/substitutes/substitutes/helpers"
 	"github.com/gin-gonic/gin"
+	"github.com/substitutes/substitutes/helpers"
 )
 
 // Root endpoint for listing all classes
-func Root(c *gin.Context) {
+func (ctl *Controller) List(c *gin.Context) {
 	resp, err := helpers.Request("Druck_Kla.htm")
 	if err != nil {
 		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})

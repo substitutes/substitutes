@@ -33,7 +33,7 @@ func GinEngine() *gin.Engine {
 
 	api := r.Group("api")
 	{
-		api.GET("/", vapi.Root)
+		api.GET("/", ctl.List)
 
 		api.GET("/c/:class", ctl.Parser)
 
