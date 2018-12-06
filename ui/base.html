@@ -15,9 +15,26 @@
 
 <body>
 
+
 <nav class="indigo">
-    <a href="/" class="brand-logo center">Substitutes</a>
+    <div class="nav-wrapper">
+        <a href="/" class="brand-logo center">Substitutes</a>
+        <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+        <ul class="left hide-on-med-and-down">
+            <li><a href="/t/">Teachers</a></li>
+            <li><a href="/">Classes</a></li>
+        </ul>
+    </div>
 </nav>
+
+
+<ul class="sidenav" id="mobile-nav">
+    <li><a href="/t/">Teachers</a></li>
+    <li><a href="/">Classes</a></li>
+</ul>
+
+
 <div class="container" id="app">
     <noscript><h1>This app is not able to load without JavaScript. Please enable JavaScript in your browser.</h1>
     </noscript>
