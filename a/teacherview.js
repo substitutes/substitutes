@@ -1,0 +1,13 @@
+let currentTeacher = document.location.href.substr(document.location.href.lastIndexOf("/") + 1);
+
+
+fetch("/api/t/" + currentTeacher).catch(e => M.toast({html: e})).then(res => {
+    return res.json();
+}).then(data => {
+    data.forEach(substitute => {
+        // TODO: Smart fill for this
+        document.querySelector("tbody").innerHTML += "<tr class='text-lighten-2'><td>" +
+            substitute.hour + "</td><td>" + substitute.classes + "</td><td>" + substitute.subject +
+            "</td><td>" + substitute.room + "</td><td>" + substitute.type.replace("Vertretung", "Substitute") + "</td></tr>";
+    });
+});

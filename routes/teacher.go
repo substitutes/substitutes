@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/substitutes/substitutes/structs"
+	"reflect"
 	"strings"
 )
 
@@ -20,8 +21,22 @@ func (ctl *Controller) Teacher(c *gin.Context) {
 
 	for i := range responses {
 		for n := range responses[i].Substitutes {
-			if strings.ToLower(responses[i].Substitutes[n].Teacher) == strings.ToLower(teacher) {
-				matches = append(matches, responses[i].Substitutes[n])
+			t := responses[i].Substitutes[n].Teacher
+			if strings.Contains(t, "=>") {
+				// Sanitize, only get newer
+				t = strings.Split(t, " => ")[1]
+			}
+
+			if strings.ToLower(t) == strings.ToLower(teacher) {
+				matched := false
+				for x := range matches {
+					if reflect.DeepEqual(matches[x], responses[i].Substitutes[n]) {
+						matched = true
+					}
+				}
+				if !matched {
+					matches = append(matches, responses[i].Substitutes[n])
+				}
 			}
 		}
 	}
@@ -42,12 +57,12 @@ func (ctl *Controller) ListTeachers(c *gin.Context) {
 			teacher := responses[i].Substitutes[n].Teacher
 			if strings.Contains(teacher, "=>") {
 				// Sanitize, only get newer
-				teacher = strings.Split(responses[i].Substitutes[n].Teacher, " => ")[1]
+				teacher = strings.Split(teacher, " => ")[1]
 			}
 			if len(teacher) < 2 {
 				continue
 			}
-			if !contains(teachers, teacher) {
+			if !stringSliceContains(teachers, teacher) {
 				teachers = append(teachers, teacher)
 			}
 		}
@@ -56,7 +71,7 @@ func (ctl *Controller) ListTeachers(c *gin.Context) {
 	c.JSON(200, teachers)
 }
 
-func contains(s []string, e string) bool {
+func stringSliceContains(s []string, e string) bool {
 	for _, a := range s {
 		if a == e {
 			return true

@@ -99,6 +99,9 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 						break
 					case 6:
 						v.Type = t
+						if t == "Vertretung" {
+							v.Type = "Substitute"
+						}
 						break
 					case 7:
 						v.Notes = t
