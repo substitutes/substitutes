@@ -38,6 +38,8 @@ func GinEngine() *gin.Engine {
 
 		api.GET("/c/:class", ctl.Parser)
 
+		api.GET("/t/", ctl.ListTeachers)
+
 		api.GET("/t/:teacher", ctl.Teacher)
 
 		api.GET("/version", ctl.Version)
