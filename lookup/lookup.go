@@ -60,7 +60,11 @@ func (l *Lookup) Get(s string) string {
 		l.GetRaw(s)
 	}
 	// Split
-	return l.GetRaw(strings.Split(s, " => ")[0]) + " => " + l.GetRaw(strings.Split(s, " => ")[1])
+	if strings.Contains(s, "=>") {
+		return l.GetRaw(strings.Split(s, " => ")[0]) + " => " + l.GetRaw(strings.Split(s, " => ")[1])
+	} else {
+		return l.GetRaw(s)
+	}
 }
 
 func (l *Lookup) GetRaw(s string) string {
