@@ -36,3 +36,8 @@ GPL
 
 - Daniel Malik ([mail@fronbasal.de](mailto:mail@fronbasal.de))
 
+## Teachers
+The [teachers.csv](lookup/teachers.csv) file contains a lookup table of available teachers.
+This is optional. You may leave it empty.
+
+The source of the data [is public](http://steinbart-gymnasium.de/Schulgemeinde/Lehrer/).

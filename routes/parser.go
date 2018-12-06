@@ -2,6 +2,7 @@ package routes
 
 import (
 	"errors"
+	"github.com/substitutes/substitutes/lookup"
 	"log"
 	"regexp"
 	"strings"
@@ -89,7 +90,7 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 						v.Day = t
 						break
 					case 3:
-						v.Teacher = t
+						v.Teacher = lookup.TeacherLookup.Get(t)
 						break
 					case 4:
 						v.Time = t
@@ -146,7 +147,7 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 						v.Hour = t
 						break
 					case 2:
-						v.Teacher = strings.Replace(t, "?", " => ", 1)
+						v.Teacher = lookup.TeacherLookup.Get(strings.Replace(t, "?", " => ", 1))
 						break
 					case 3:
 						v.Subject = t

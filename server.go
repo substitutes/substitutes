@@ -6,6 +6,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"github.com/substitutes/substitutes/helpers"
+	"github.com/substitutes/substitutes/lookup"
 	vapi "github.com/substitutes/substitutes/routes"
 	"strconv"
 )
@@ -68,6 +69,8 @@ func main() {
 		log.Warn("Failed to read configuration file: ", err)
 	}
 	log.Info("Initialized application")
+
+	lookup.New().ReadFile()
 
 	viper.SetDefault("port", 5000)
 	GinEngine().Run(":" + strconv.Itoa(viper.GetInt("port")))
