@@ -4,6 +4,8 @@ let currentTeacher = document.location.href.substr(document.location.href.lastIn
 fetch("/api/t/" + currentTeacher).catch(e => M.toast({html: e})).then(res => {
     return res.json();
 }).then(data => {
+    document.querySelector("#spinner").remove();
+
     if (!data) {
         M.toast({html: "The teacher does not have any substitutes"});
         return;

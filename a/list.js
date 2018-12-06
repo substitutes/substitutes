@@ -4,6 +4,7 @@ let currentClass = document.location.href.substr(document.location.href.lastInde
 fetch("/api/c/" + currentClass).catch(e => M.toast({html: e})).then(res => {
     return res.json();
 }).then(data => {
+    document.querySelector("#spinner").remove();
     document.querySelector("h4").innerText = data.meta.date.replace("Vertretungen", "Substitutes").split("/")[0];
     document.querySelector("#title").innerHTML = data.meta.class + ", " + data.meta.date.split("/")[1] + " - " + data.meta.updated;
     if (!data.meta.extended)
