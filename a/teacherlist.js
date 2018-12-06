@@ -1,9 +1,9 @@
-fetch("/api/").catch(e => M.toast({html: e})).then(response => {
+fetch("/api/t/").catch(e => M.toast({html: e})).then(response => {
     return response.json();
 }).then(data => {
     const el = document.querySelector(".collection");
     data.forEach(c => {
-        el.innerHTML += "<a class='collection-item indigo-text' href='/c/" + c + "'>" + c + "</a>";
+        el.innerHTML += "<a class='collection-item indigo-text' href='/t/" + c + "'>" + c + "</a>";
     });
     M.AutoInit(document.body);
 });

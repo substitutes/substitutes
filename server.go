@@ -30,6 +30,10 @@ func GinEngine() *gin.Engine {
 		c.HTML(200, "list", gin.H{"class": c.Param("c"), "version": helpers.GetVersionString()})
 	})
 
+	r.GET("/t/", func(c *gin.Context) {
+		c.HTML(200, "teacherlist", gin.H{"version": helpers.GetVersionString()})
+	})
+
 	ctl := vapi.NewController()
 
 	api := r.Group("api")
@@ -69,5 +73,7 @@ func newRenderer() multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
 	r.AddFromFiles("index", "ui/base.html", "ui/index.html")
 	r.AddFromFiles("list", "ui/base.html", "ui/list.html")
+
+	r.AddFromFiles("teacherlist", "ui/base.html", "ui/teacherlist.html")
 	return r
 }
