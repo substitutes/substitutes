@@ -8,16 +8,23 @@ import (
 
 // Root endpoint for listing all classes
 func (ctl *Controller) List(c *gin.Context) {
+	list, err := ctl.GetList()
+	if err != nil {
+		NewAPIError("Failed to fetch classes", err).Throw(c, 500)
+		return
+	}
+	c.JSON(200, list)
+}
+
+func (ctl *Controller) GetList() ([]string, error) {
 	resp, err := helpers.Request("Druck_Kla.htm")
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to make request", "error": err.Error()})
-		return
+		return nil, err
 	}
 	defer resp.Body.Close()
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
-		c.JSON(500, gin.H{"message": "Failed to read document", "error": err.Error()})
-		return
+		return nil, err
 	}
 	var classes []string
 	doc.Find("table").Last().Find("td").Each(func(i int, sel *goquery.Selection) {
@@ -31,5 +38,5 @@ func (ctl *Controller) List(c *gin.Context) {
 			classes = append(classes, title)
 		}
 	})
-	c.JSON(200, classes)
+	return classes, nil
 }

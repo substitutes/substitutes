@@ -25,3 +25,15 @@ type Version struct {
 	Hash    string `json:"hash"`
 	Message string `json:"message"`
 }
+
+type SubstituteMeta struct {
+	Date     string `json:"date"`
+	Class    string `json:"class"`
+	Extended bool   `json:"extended"`
+	Updated  string `json:"updated"`
+}
+
+type SubstituteResponse struct {
+	Substitutes []Substitute   `json:"substitutes"`
+	Meta        SubstituteMeta `json:"meta"`
+}

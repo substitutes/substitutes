@@ -2,6 +2,7 @@ package routes
 
 import (
 	"errors"
+	"log"
 	"regexp"
 	"strings"
 
@@ -23,11 +24,18 @@ func (ctl *Controller) Parser(c *gin.Context) {
 		NewAPIError("Invalid class", errors.New("class not valid")).Throw(c, 400)
 		return
 	}
-	resp, err := helpers.Request("Druck_Kla_" + k + ".htm")
+	substitutes, errorMessage := ctl.GetClass(k)
+	if errorMessage != nil {
+		errorMessage.Throw(c, 500)
+	}
+	c.JSON(200, substitutes)
+}
+
+func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIErrorMessage) {
+	resp, err := helpers.Request("Druck_Kla_" + class + ".htm")
 
 	if err != nil {
-		NewAPIError("Failed to make request", err).Throw(c, 500)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Failed to make request", err)
 	}
 
 	// Defer after checking.
@@ -36,16 +44,13 @@ func (ctl *Controller) Parser(c *gin.Context) {
 	f, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		NewAPIError("Failed to read body", err).Throw(c, 500)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Failed to read body", err)
 	}
 	if resp.StatusCode == 404 {
-		NewAPIError("Could not find site", nil).Throw(c, 404)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Could not find site", nil)
 	}
 	if resp.StatusCode != 200 {
-		NewAPIError("Did not receive status 200", errors.New(resp.Status)).Throw(c, 500)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Did not receive status 200", errors.New(resp.Status))
 	}
 
 	body := make([]byte, len(f))
@@ -53,14 +58,12 @@ func (ctl *Controller) Parser(c *gin.Context) {
 	iconv.Convert(f, body, "iso-8859-1", "utf-8")
 
 	if err != nil {
-		NewAPIError("Failed to decompose UTF8", err).Throw(c, 500)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Failed to decompose UTF8", err)
 	}
 
 	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(body))
 	if err != nil {
-		NewAPIError("Failed to read document", err).Throw(c, 500)
-		return
+		return structs.SubstituteResponse{}, NewAPIError("Failed to read document", err)
 	}
 	var extended bool
 	var substitutes []structs.Substitute
@@ -116,8 +119,7 @@ func (ctl *Controller) Parser(c *gin.Context) {
 					case 12:
 						matched, err := regexp.MatchString("x|X", t)
 						if err != nil {
-							NewAPIError("Failed to compile Regex", err).Throw(c, 500)
-							return
+							log.Fatal("Failed to compile parser RegEx")
 						}
 						v.New = matched
 						break
@@ -164,16 +166,11 @@ func (ctl *Controller) Parser(c *gin.Context) {
 		}
 	})
 
-	var meta struct {
-		Date     string `json:"date"`
-		Class    string `json:"class"`
-		Extended bool   `json:"extended"`
-		Updated  string `json:"updated"`
+	meta := structs.SubstituteMeta{
+		Extended: extended,
+		Date:     strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1),
+		Class:    strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1),
+		Updated:  doc.Find("table").First().Find("tr").Last().Find("td").Last().Text(),
 	}
-
-	meta.Extended = extended
-	meta.Date = strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1)
-	meta.Class = strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1)
-	meta.Updated = doc.Find("table").First().Find("tr").Last().Find("td").Last().Text()
-	c.JSON(200, gin.H{"substitutes": substitutes, "meta": meta})
+	return structs.SubstituteResponse{Meta: meta, Substitutes: substitutes}, nil
 }
