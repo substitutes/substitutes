@@ -2,6 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
 	"github.com/substitutes/substitutes/structs"
 	"reflect"
 	"strings"
@@ -66,6 +67,10 @@ func (ctl *Controller) ListTeachers(c *gin.Context) {
 				teachers = append(teachers, teacher)
 			}
 		}
+	}
+	if len(teachers) == 0 {
+		NewAPIError("No substitutes for "+c.Param("teacher"), errors.New("no content")).Throw(c, 204)
+		return
 	}
 
 	c.JSON(200, teachers)
