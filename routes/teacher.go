@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
+	"github.com/substitutes/substitutes/lookup"
 	"github.com/substitutes/substitutes/structs"
 	"reflect"
 	"strings"
@@ -42,7 +43,7 @@ func (ctl *Controller) Teacher(c *gin.Context) {
 		}
 	}
 
-	c.JSON(200, matches)
+	c.JSON(200, gin.H{"substitutes": matches, "teacher": lookup.TeacherLookup.GetFull(teacher), "date": responses[0].Meta.Date})
 }
 
 func (ctl *Controller) ListTeachers(c *gin.Context) {
@@ -73,7 +74,7 @@ func (ctl *Controller) ListTeachers(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, teachers)
+	c.JSON(200, gin.H{"teachers": teachers, "date": responses[0].Meta.Date})
 }
 
 func stringSliceContains(s []string, e string) bool {

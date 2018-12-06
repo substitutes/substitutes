@@ -8,9 +8,11 @@ import (
 )
 
 type Lookup struct {
-	RawRecords [][]string
-	Lookup     map[string]string
-	path       string
+	RawRecords    [][]string
+	Lookup        map[string]string
+	ReverseLookup map[string]string
+	Title         map[string]string
+	path          string
 }
 
 //TeacherLookup is the deafult Lookup table, created on New()
@@ -41,12 +43,14 @@ func (l *Lookup) ReadFile() {
 	l.RawRecords = records
 	for _, record := range records {
 		l.Lookup[removeSpaces(record[2])] = removeSpaces(record[1])
+		l.ReverseLookup[removeSpaces(record[1])] = removeSpaces(record[2])
+		l.Title[removeSpaces(record[2])] = removeSpaces(record[0])
 	}
 	log.Info("Loaded teachers")
 }
 
 func New() *Lookup {
-	l := &Lookup{Lookup: map[string]string{}}
+	l := &Lookup{Lookup: map[string]string{}, ReverseLookup: map[string]string{}, Title: map[string]string{}}
 	TeacherLookup = l
 	return TeacherLookup
 }
@@ -72,4 +76,8 @@ func (l *Lookup) GetRaw(s string) string {
 		return s
 	}
 	return l.Lookup[s]
+}
+
+func (l *Lookup) GetFull(s string) string {
+	return l.Title[l.Get(s)] + " " + l.Get(s)
 }

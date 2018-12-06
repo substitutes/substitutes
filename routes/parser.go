@@ -91,6 +91,7 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 						break
 					case 3:
 						v.Teacher = lookup.TeacherLookup.Get(t)
+						v.TeacherInitials = t
 						break
 					case 4:
 						v.Time = t
@@ -148,6 +149,7 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 						break
 					case 2:
 						v.Teacher = lookup.TeacherLookup.Get(strings.Replace(t, "?", " => ", 1))
+						v.TeacherInitials = strings.Replace(t, "?", " => ", 1)
 						break
 					case 3:
 						v.Subject = t
@@ -172,7 +174,7 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 
 	meta := structs.SubstituteMeta{
 		Extended: extended,
-		Date:     strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1),
+		Date:     strings.Replace(strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1), "Vertretungen ", "Substitutes", 1),
 		Class:    strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1),
 		Updated:  doc.Find("table").First().Find("tr").Last().Find("td").Last().Text(),
 	}
