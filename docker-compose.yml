@@ -7,4 +7,5 @@ services:
     env_file:
       - .env
     image: substitutes/substitutes
+    restart: always
     build: .
