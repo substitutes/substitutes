@@ -3,6 +3,7 @@ package routes
 import (
 	"errors"
 	"github.com/substitutes/substitutes/lookup"
+	"github.com/substitutes/substitutes/parser"
 	"log"
 	"regexp"
 	"strings"
@@ -58,10 +59,6 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 	// TODO: Handle errors.
 	iconv.Convert(f, body, "iso-8859-1", "utf-8")
 
-	if err != nil {
-		return structs.SubstituteResponse{}, NewAPIError("Failed to decompose UTF8", err)
-	}
-
 	doc, err := goquery.NewDocumentFromReader(bytes.NewReader(body))
 	if err != nil {
 		return structs.SubstituteResponse{}, NewAPIError("Failed to read document", err)
@@ -81,7 +78,12 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 					switch i {
 					// Parse the HTML table into the struct
 					case 0:
-						v.Date = t
+						// TODO: Check if this is valid
+						parsedTime, err := parser.ParseUntisTime(t)
+						if err != nil {
+							break
+						}
+						v.Date = parsedTime
 						break
 					case 1:
 						v.Hour = t
@@ -171,12 +173,16 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 
 		}
 	})
+	parsedDate, err := parser.ParseUntisDate(doc.Find("center font font b").First().Text())
+	if err != nil {
+		return structs.SubstituteResponse{}, NewAPIError("Failed to parse date", err)
+	}
 
 	meta := structs.SubstituteMeta{
 		Extended: extended,
-		Date:     strings.Replace(strings.Replace(doc.Find("center font font b").First().Text(), "\n", "", -1), "Vertretungen ", "Substitutes", 1),
+		Date:     parsedDate,
 		Class:    strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1),
-		Updated:  doc.Find("table").First().Find("tr").Last().Find("td").Last().Text(),
+		Updated:  parser.ParseUntisTime(doc.Find("table").First().Find("tr").Last().Find("td").Last().Text()),
 	}
 	return structs.SubstituteResponse{Meta: meta, Substitutes: substitutes}, nil
 }
