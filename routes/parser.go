@@ -178,11 +178,16 @@ func (ctl *Controller) GetClass(class string) (structs.SubstituteResponse, *APIE
 		return structs.SubstituteResponse{}, NewAPIError("Failed to parse date", err)
 	}
 
+	parsedUpdated, err := parser.ParseUntisTime(doc.Find("table").First().Find("tr").Last().Find("td").Last().Text())
+	if err != nil {
+		return structs.SubstituteResponse{}, NewAPIError("Failed to parse date", err)
+	}
+
 	meta := structs.SubstituteMeta{
 		Extended: extended,
 		Date:     parsedDate,
 		Class:    strings.Replace(doc.Find("center font font font").First().Text(), "\n", "", -1),
-		Updated:  parser.ParseUntisTime(doc.Find("table").First().Find("tr").Last().Find("td").Last().Text()),
+		Updated:  parsedUpdated,
 	}
 	return structs.SubstituteResponse{Meta: meta, Substitutes: substitutes}, nil
 }
