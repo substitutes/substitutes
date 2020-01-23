@@ -9,7 +9,7 @@ import (
 const UntisTimeLayout = "2.1.2006 15:04"
 
 // UntisDateLayout defines the date format as used in the Untis export
-const UntisDateLayout = "2.1."
+const UntisDateLayout = "2.1.2006"
 
 // WeekdayLanguageMapping is a translation mapping for days of the week from German to English
 var WeekdayLanguageMapping = map[string]string{
