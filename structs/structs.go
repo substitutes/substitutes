@@ -5,7 +5,7 @@ import "time"
 // Substitute struct for holding data
 type Substitute struct {
 	Date            time.Time `json:"date"`
-	Hour            int       `json:"hour"`
+	Hour            string    `json:"hour"`
 	Teacher         string    `json:"teacher"`
 	TeacherInitials string    `json:"initials"`
 	Subject         string    `json:"subject"`
