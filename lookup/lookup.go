@@ -125,7 +125,7 @@ func (l *Lookup) ReadFile() {
 		l.ReverseLookup[removeSpaces(record[1])] = removeSpaces(record[2])
 		l.Title[removeSpaces(record[2])] = removeSpaces(record[0])
 	}
-	log.Info("Loaded teachers")
+	log.Debug("Loaded teachers")
 }
 
 func New() *Lookup {
